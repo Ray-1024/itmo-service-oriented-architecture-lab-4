@@ -1,0 +1,54 @@
+version: '3.9'
+
+services:
+  postgresql:
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+
+
+  consul:
+    image: consul:1.1.0
+    hostname: localhost
+    ports:
+      - "8500:8500"
+
+
+  haproxy_1:
+    image: "haproxy:2.2-alpine"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
+      - ./cert.pem:/etc/ssl/certs/site.pem
+
+
+  haproxy_2:
+    image: "haproxy:2.2-alpine"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
+      - ./cert.pem:/etc/ssl/certs/site.pem
+
+
+  collection_service_1:
+    image:
+
+
+  collection_service_2:
+    image:
+
+
+  navigator_service_1:
+    image:
+
+
+  navigator_service_2:
+    image:
