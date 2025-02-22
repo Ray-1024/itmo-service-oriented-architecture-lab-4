@@ -18,37 +18,21 @@ services:
       - "8500:8500"
 
 
-  haproxy_1:
+  haproxy_collection_service:
     image: "haproxy:2.2-alpine"
     ports:
       - "80:80"
       - "443:443"
     volumes:
-      - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
+      - ./haproxy/haproxy-collection-service.cfg:/usr/local/etc/haproxy/haproxy.cfg
       - ./cert.pem:/etc/ssl/certs/site.pem
 
 
-  haproxy_2:
+  haproxy_navigator_service:
     image: "haproxy:2.2-alpine"
     ports:
       - "80:80"
       - "443:443"
     volumes:
-      - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
+      - ./haproxy/haproxy-navigator-service.cfg:/usr/local/etc/haproxy/haproxy.cfg
       - ./cert.pem:/etc/ssl/certs/site.pem
-
-
-  collection_service_1:
-    image:
-
-
-  collection_service_2:
-    image:
-
-
-  navigator_service_1:
-    image:
-
-
-  navigator_service_2:
-    image:

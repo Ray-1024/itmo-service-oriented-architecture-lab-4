@@ -9,12 +9,10 @@ import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
 @Builder
-@JacksonXmlRootElement(localName = "group")
-public class GroupInfoDto {
-    @JacksonXmlProperty
-    private String name;
+@Data
+@JacksonXmlRootElement(localName = "response")
+public class CountDto {
     @JacksonXmlProperty
     private int count;
 }

@@ -36,46 +36,6 @@ public class NavigatorService {
                                                 CoordinatesDto coordinatesDto,
                                                 String routeName
     ) {
-        /*LocationDto from = null;
-        LocationDto to = null;
-
-        for (int pageNumber = 1; ; ++pageNumber) {
-            List<RouteDto> page = routeCollectionClient.getAllRoutes(100, pageNumber, "", "");
-
-            if (page.isEmpty()) break;
-
-            for (RouteDto routeDto : page) {
-                if (Objects.equals(routeDto.getFrom().getName(), fromLocationName)) {
-                    from = routeDto.getFrom();
-                }
-                if (Objects.equals(routeDto.getTo().getName(), toLocationName)) {
-                    to = routeDto.getTo();
-                }
-                if (Objects.nonNull(from) && Objects.nonNull(to)) {
-                    break;
-                }
-            }
-            if (Objects.nonNull(from) && Objects.nonNull(to)) {
-                break;
-            }
-
-        }
-
-        if (Objects.isNull(from) || Objects.isNull(to)) {
-            String paramName = Objects.isNull(from) ? "name-from" : "name-to";
-            throw InvalidInputException.builder()
-                    .invalidParams(List.of(InvalidParamDto.builder()
-                            .paramName(paramName)
-                            .message("Location with this name " + paramName + " not found")
-                            .build()
-                    ))
-                    .error(ErrorDto.builder()
-                            .message("Invalid parameter name: " + paramName)
-                            .time(Instant.now())
-                            .build())
-                    .build();
-        }*/
-
         return routeCollectionClient.createRoute(
                 RouteDto.builder()
                         .name(routeName)

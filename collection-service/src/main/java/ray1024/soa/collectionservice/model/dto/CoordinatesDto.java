@@ -1,9 +1,8 @@
 package ray1024.soa.collectionservice.model.dto;
 
-import jakarta.xml.bind.annotation.XmlAccessType;
-import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlElement;
-import jakarta.xml.bind.annotation.XmlRootElement;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,12 +13,13 @@ import ray1024.soa.collectionservice.model.entity.CoordinatesEntity;
 @NoArgsConstructor
 @Data
 @Builder
-@XmlRootElement(name = "coordinates")
-@XmlAccessorType(XmlAccessType.FIELD)
+@JacksonXmlRootElement(localName = "coordinates")
 public class CoordinatesDto {
-    @XmlElement(required = true)
+    @JacksonXmlProperty
+    @JsonProperty(required = true)
     private long x; //Максимальное значение поля: 510
-    @XmlElement(required = true)
+    @JacksonXmlProperty
+    @JsonProperty(required = true)
     private Long y; //Поле не может быть null
 
     public static CoordinatesDto fromEntity(CoordinatesEntity coordinatesEntity) {

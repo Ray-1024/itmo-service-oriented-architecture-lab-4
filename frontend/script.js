@@ -121,11 +121,19 @@ const utils = {
                 txt += clippedCell(item.coordinates.x.toString(), 8);
                 txt += clippedCell(item.coordinates.y.toString(), 8);
                 txt += clippedCell(item.creationDate.toString(), 23);
-                if (item.from != null) {
-                    txt += clippedCell(item.from.x.toString(), 8);
-                    txt += clippedCell(item.from.y.toString(), 8);
-                    txt += clippedCell(item.from.z.toString(), 8);
-                    txt += clippedCell(item.from.name.toString(), 8);
+                if (item.from !== null && item.from !== undefined) {
+                    if (item.from.x !== undefined)
+                        txt += clippedCell(item.from.x.toString(), 8);
+                    else txt += '<td></td>';
+                    if (item.from.y !== undefined)
+                        txt += clippedCell(item.from.y.toString(), 8);
+                    else txt += '<td></td>';
+                    if (item.from.z !== undefined)
+                        txt += clippedCell(item.from.z.toString(), 8);
+                    else txt += '<td></td>';
+                    if (item.from.name !== undefined)
+                        txt += clippedCell(item.from.name.toString(), 8);
+                    else txt += '<td></td>';
                 } else {
                     txt += '<td></td><td></td><td></td><td></td>';
                 }

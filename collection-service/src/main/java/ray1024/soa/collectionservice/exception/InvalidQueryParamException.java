@@ -4,6 +4,8 @@ import lombok.*;
 import ray1024.soa.collectionservice.model.dto.ErrorDto;
 import ray1024.soa.collectionservice.model.dto.InvalidParamDto;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
@@ -14,4 +16,17 @@ import java.util.List;
 public class InvalidQueryParamException extends RuntimeException {
     private List<InvalidParamDto> invalidParams;
     private ErrorDto error;
+
+    public InvalidQueryParamException(String paramName, String paramMessage, String errorMessage) {
+        invalidParams = List.of(
+                InvalidParamDto.builder()
+                        .paramName(paramName)
+                        .message(paramMessage)
+                        .build()
+        );
+        error = ErrorDto.builder()
+                .message(errorMessage)
+                .time(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(new Date()))
+                .build();
+    }
 }

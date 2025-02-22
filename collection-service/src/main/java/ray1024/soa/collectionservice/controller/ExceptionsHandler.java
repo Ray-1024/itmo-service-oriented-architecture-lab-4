@@ -1,66 +1,69 @@
 package ray1024.soa.collectionservice.controller;
 
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
-import ray1024.soa.collectionservice.exception.InternalServerException;
-import ray1024.soa.collectionservice.exception.InvalidInputException;
-import ray1024.soa.collectionservice.exception.InvalidQueryParamException;
-import ray1024.soa.collectionservice.exception.OtherErrorException;
-import ray1024.soa.collectionservice.model.response.ErrorResponse;
-import ray1024.soa.collectionservice.model.response.InvalidParamsResponse;
+import org.springframework.web.bind.annotation.*;
+import ray1024.soa.collectionservice.exception.*;
+import ray1024.soa.collectionservice.model.dto.ErrorDto;
+import ray1024.soa.collectionservice.model.dto.InvalidParamsDto;
 
-import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
-import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.*;
 
 @ResponseBody
 @ControllerAdvice
+@RequestMapping(produces = org.springframework.http.MediaType.APPLICATION_XML_VALUE)
 public class ExceptionsHandler {
 
     @ExceptionHandler({
             InternalServerException.class,
     })
-    public ResponseEntity<ErrorResponse> handleInternalServerException(InternalServerException e) {
-        return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(
-                ErrorResponse.builder()
-                        .message(e.getError().getMessage())
-                        .time(e.getError().getTime())
-                        .build()
-        );
+    @ResponseStatus(INTERNAL_SERVER_ERROR)
+    public ErrorDto handleInternalServerException(InternalServerException e) {
+        return ErrorDto.builder()
+                .message(e.getError().getMessage())
+                .time(e.getError().getTime())
+                .build();
     }
 
     @ExceptionHandler({
             InvalidInputException.class,
     })
-    public ResponseEntity<InvalidParamsResponse> handleInvalidInputException(InvalidInputException e) {
-        return ResponseEntity.badRequest().body(InvalidParamsResponse.builder()
+    @ResponseStatus(BAD_REQUEST)
+    public InvalidParamsDto handleInvalidInputException(InvalidInputException e) {
+        return InvalidParamsDto.builder()
                 .invalidParams(e.getInvalidParams())
                 .error(e.getError())
-                .build());
+                .build();
+    }
+
+    @ExceptionHandler({
+            InvalidBodyParamException.class,
+    })
+    @ResponseStatus(UNPROCESSABLE_ENTITY)
+    public InvalidBodyParamException handleInvalidBodyParamException(InvalidBodyParamException e) {
+        return InvalidBodyParamException.builder()
+                .invalidParams(e.getInvalidParams())
+                .error(e.getError())
+                .build();
     }
 
     @ExceptionHandler({
             InvalidQueryParamException.class,
     })
-    public ResponseEntity<InvalidParamsResponse> handleInvalidQueryParamException(InvalidQueryParamException e) {
-        return ResponseEntity.badRequest().body(
-                InvalidParamsResponse.builder()
-                        .invalidParams(e.getInvalidParams())
-                        .error(e.getError())
-                        .build()
-        );
+    @ResponseStatus(BAD_REQUEST)
+    public InvalidParamsDto handleInvalidQueryParamException(InvalidQueryParamException e) {
+        return InvalidParamsDto.builder()
+                .invalidParams(e.getInvalidParams())
+                .error(e.getError())
+                .build();
     }
 
     @ExceptionHandler({
             OtherErrorException.class,
     })
-    public ResponseEntity<ErrorResponse> handleOtherErrorException(OtherErrorException e) {
-        return ResponseEntity.status(NOT_FOUND).body(
-                ErrorResponse.builder()
-                        .message(e.getError().getMessage())
-                        .time(e.getError().getTime())
-                        .build()
-        );
+    @ResponseStatus(NOT_FOUND)
+    public ErrorDto handleOtherErrorException(OtherErrorException e) {
+        return ErrorDto.builder()
+                .message(e.getError().getMessage())
+                .time(e.getError().getTime())
+                .build();
     }
 }

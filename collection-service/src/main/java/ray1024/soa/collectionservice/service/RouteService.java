@@ -180,9 +180,9 @@ public class RouteService {
         ).toList();
     }
 
-    public List<RouteDto> getAllRoutes(int page, int size, String sort, String filter) {
-        if (page < 1) invalidInput("page", "Page number must be greater than 0");
-        if (size < 1 || size > 100) invalidInput("size", "Page size must be from range [1:100]");
+    public List<RouteDto> getAllRoutes(Integer page, Integer size, String sort, String filter) {
+        if (page == null || page < 1) invalidInput("page", "Page number must be greater than 0");
+        if (size == null || size < 1 || size > 100) invalidInput("size", "Page size must be from range [1:100]");
         List<Map.Entry<String, Boolean>> sorting = parseSorting(sort);
         List<Map.Entry<String, Map.Entry<String, String>>> filtering = parseFiltering(filter);
         return routeRepository.getAll(
@@ -190,7 +190,9 @@ public class RouteService {
         ).stream().map(RouteDto::fromEntity).collect(Collectors.toList());
     }
 
-    public RouteDto getRoute(long routeId) {
+    public RouteDto getRoute(Long routeId) {
+        if (routeId == null)
+            throw new InvalidQueryParamException("routeId", "routeId is incorrect", "Incorrect route id");
         return RouteDto.fromEntity(routeRepository.getById(routeId));
     }
 
@@ -204,7 +206,9 @@ public class RouteService {
         return RouteDto.fromEntity(routeRepository.update(route));
     }
 
-    public void deleteRoute(long routeId) {
+    public void deleteRoute(Long routeId) {
+        if (routeId == null)
+            throw new InvalidQueryParamException("routeId", "routeId is incorrect", "Incorrect route id");
         routeRepository.deleteById(routeId);
     }
 
@@ -212,7 +216,9 @@ public class RouteService {
         return routeRepository.getGroupsInfo();
     }
 
-    public long getEqualDistanceRoutesCount(float distance) {
-        return routeRepository.getEqualDistanceRoutesCount((int) distance);
+    public long getEqualDistanceRoutesCount(Float distance) {
+        if (distance == null)
+            throw new InvalidQueryParamException("route.distance", "route.distance is incorrect", "Incorrect route distance");
+        return routeRepository.getEqualDistanceRoutesCount((int) distance.floatValue());
     }
 }
