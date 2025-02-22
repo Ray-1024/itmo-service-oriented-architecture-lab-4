@@ -4,15 +4,15 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ray1024.soa.navigatorservice.ejb.RemoteNavigatorService;
 import ray1024.soa.navigatorservice.model.dto.RouteDto;
 import ray1024.soa.navigatorservice.model.request.NavigatorCreateRouteRequest;
 import ray1024.soa.navigatorservice.model.response.RouteCollectionResponse;
-import ray1024.soa.navigatorservice.service.NavigatorService;
 
 @AllArgsConstructor
 @RestController
 public class NavigatorController {
-    private final NavigatorService navigatorService;
+    private final RemoteNavigatorService remoteNavigatorService;
 
     @GetMapping(value = "/api/v1/navigator/routes/{nameFrom}/{nameTo}/{orderBy}",
             consumes = MediaType.APPLICATION_XML_VALUE,
@@ -22,7 +22,7 @@ public class NavigatorController {
                                                              @PathVariable String orderBy) {
         return ResponseEntity.ok(
                 RouteCollectionResponse.builder()
-                        .routes(navigatorService.getRoutesWithLocationNamesSorted(nameFrom, nameTo, orderBy))
+                        .routes(remoteNavigatorService.getRoutesWithLocationNamesSorted(nameFrom, nameTo, orderBy))
                         .build());
     }
 
@@ -35,7 +35,7 @@ public class NavigatorController {
             @PathVariable float distance,
             @RequestBody NavigatorCreateRouteRequest navigatorCreateRouteRequest
     ) {
-        return navigatorService.createRouteByLocationsNames(
+        return remoteNavigatorService.createRouteByLocationsNames(
                 nameFrom,
                 nameTo,
                 distance,

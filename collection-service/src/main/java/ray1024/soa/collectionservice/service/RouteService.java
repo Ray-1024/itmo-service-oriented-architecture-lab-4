@@ -7,7 +7,6 @@ import ray1024.soa.collectionservice.exception.InvalidQueryParamException;
 import ray1024.soa.collectionservice.exception.OtherErrorException;
 import ray1024.soa.collectionservice.model.dto.ErrorDto;
 import ray1024.soa.collectionservice.model.dto.GroupInfoDto;
-import ray1024.soa.collectionservice.model.dto.InvalidParamDto;
 import ray1024.soa.collectionservice.model.dto.RouteDto;
 import ray1024.soa.collectionservice.repository.RouteRepository;
 
@@ -21,18 +20,7 @@ public class RouteService {
     private final RouteRepository routeRepository;
 
     private void invalidInput(String paramName, String paramMessage) throws InvalidInputException {
-        throw InvalidInputException.builder()
-                .invalidParams(List.of(
-                        InvalidParamDto.builder()
-                                .paramName(paramName)
-                                .message(paramMessage)
-                                .build()
-                ))
-                .error(ErrorDto.builder()
-                        .message("Wrong route param")
-                        .time(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(new Date()))
-                        .build())
-                .build();
+        throw new InvalidInputException(paramName, paramMessage, "Wrong route param");
     }
 
     private void validateRoute(RouteDto routeDto, boolean isCreate) {
@@ -99,26 +87,14 @@ public class RouteService {
         if (Objects.isNull(sorting) || sorting.isEmpty()) return List.of();
         String[] sortingFields = sorting.split(";");
 
-        /*
-        if (!Arrays.stream(sortingFields).allMatch(sort ->
-                isRouteField(sort) ||
-                        (sorting.charAt(0) == '<' && isRouteField(sorting.substring(1)))
-        )) {
-         */
         if (!Arrays.stream(sortingFields).allMatch(sort ->
                 isRouteField(sort) ||
                         (sort.charAt(0) == '<' && isRouteField(sort.substring(1)))
         ) || Arrays.stream(sortingFields).filter(str -> !str.isEmpty()).map(str -> str.charAt(0) == '<' ? str.substring(1) : str).distinct().count() != sortingFields.length) {
-            throw InvalidQueryParamException.builder()
-                    .invalidParams(List.of(InvalidParamDto.builder()
-                            .paramName("sort")
-                            .message("sort must be '' or list in format '{fieldName}' or '<{fieldName}'")
-                            .build()))
-                    .error(ErrorDto.builder()
-                            .message("Wrong query parameter")
-                            .time(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(new Date()))
-                            .build())
-                    .build();
+            throw new InvalidQueryParamException("sort",
+                    "sort must be '' or list in format '{fieldName}' or '<{fieldName}'",
+                    "Wrong query parameter"
+            );
         }
         return Arrays.stream(sortingFields).map(str -> {
                     boolean asc = str.charAt(0) != '<';
@@ -159,16 +135,9 @@ public class RouteService {
                     return false;
                 }
         )) {
-            throw InvalidQueryParamException.builder()
-                    .invalidParams(List.of(InvalidParamDto.builder()
-                            .paramName("filter")
-                            .message("filter must be {fieldName} =/!=/</>/<=/>= {value} in semicolon list")
-                            .build()))
-                    .error(ErrorDto.builder()
-                            .message("Wrong query parameter")
-                            .time(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(new Date()))
-                            .build())
-                    .build();
+            throw new InvalidQueryParamException("filter",
+                    "filter must be {fieldName} =/!=/</>/<=/>= {value} in semicolon list",
+                    "Wrong query parameter");
         }
         return Arrays.stream(split).map(str -> {
                     String[] parts = str.split("=|!=|<|<=|>|>=");

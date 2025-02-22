@@ -10,29 +10,39 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
 
-
   consul:
-    image: consul:1.1.0
-    hostname: localhost
+    image: hashicorp/consul:1.14.0
+    container_name: consul
+    depends_on:
+      - postgresql
     ports:
       - "8500:8500"
+      - "8600:8600/udp"
+    command: agent -dev -client=0.0.0.0
 
-
-  haproxy_collection_service:
-    image: "haproxy:2.2-alpine"
-    ports:
-      - "80:80"
-      - "443:443"
+  haproxy:
+    image: haproxy:2.2-alpine
+    container_name: haproxy
+    restart: always
+    depends_on:
+      - postgresql
     volumes:
-      - ./haproxy/haproxy-collection-service.cfg:/usr/local/etc/haproxy/haproxy.cfg
-      - ./cert.pem:/etc/ssl/certs/site.pem
-
-
-  haproxy_navigator_service:
-    image: "haproxy:2.2-alpine"
+      - ./haproxy:/usr/local/etc/haproxy
     ports:
-      - "80:80"
-      - "443:443"
+      - "7000:7000"
+      - "8404:8404"
+
+  consul-template:
+    image: hashicorp/consul-template:latest
+    container_name: consul-template
+    restart: always
+    user: "0"
     volumes:
-      - ./haproxy/haproxy-navigator-service.cfg:/usr/local/etc/haproxy/haproxy.cfg
-      - ./cert.pem:/etc/ssl/certs/site.pem
+      - ./haproxy:/usr/local/etc/haproxy
+      - ./haproxy.ctmpl:/templates/haproxy.ctmpl
+    depends_on:
+      - consul
+      - haproxy
+    command: >
+      -consul-addr="http://consul:8500"
+      -template="/templates/haproxy.ctmpl:/usr/local/etc/haproxy/haproxy.cfg:haproxy -f /usr/local/etc/haproxy/haproxy.cfg -sf $(pidof haproxy); sleep 2"

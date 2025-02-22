@@ -9,9 +9,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import ray1024.soa.collectionservice.exception.InternalServerException;
 import ray1024.soa.collectionservice.exception.InvalidQueryParamException;
-import ray1024.soa.collectionservice.model.dto.ErrorDto;
 import ray1024.soa.collectionservice.model.dto.GroupInfoDto;
-import ray1024.soa.collectionservice.model.dto.InvalidParamDto;
 import ray1024.soa.collectionservice.model.dto.RouteDto;
 import ray1024.soa.collectionservice.model.entity.RouteEntity;
 
@@ -24,7 +22,6 @@ import java.util.stream.Collectors;
 @Component
 @AllArgsConstructor
 public class RouteRepository {
-
     private final EntityManager entityManager;
 
     @Transactional
@@ -70,12 +67,7 @@ public class RouteRepository {
 
             return query.getResultList();
         } catch (Exception e) {
-            throw InternalServerException.builder()
-                    .error(ErrorDto.builder()
-                            .message("Can't find routes with this paging, sorting and filtering parameters")
-                            .time(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(new Date()))
-                            .build())
-                    .build();
+            throw new InternalServerException("Can't find routes with this paging, sorting and filtering parameters");
         }
     }
 
@@ -84,29 +76,14 @@ public class RouteRepository {
         try {
             RouteEntity entity = entityManager.find(RouteEntity.class, id);
             if (entity == null) {
-                throw InvalidQueryParamException.builder()
-                        .invalidParams(List.of(
-                                InvalidParamDto.builder()
-                                        .paramName("id")
-                                        .message("Route with this id doesn't exists")
-                                        .build()
-                        ))
-                        .error(ErrorDto.builder()
-                                .message("Route with id=" + id + "doesn't exists")
-                                .time(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(new Date()))
-                                .build())
-                        .build();
+                throw new InvalidQueryParamException("id", "Route with this id doesn't exists",
+                        "Route with id=" + id + "doesn't exists");
             }
             return entity;
         } catch (InvalidQueryParamException e) {
             throw e;
         } catch (Exception e) {
-            throw InternalServerException.builder()
-                    .error(ErrorDto.builder()
-                            .message("Some problem with searching route by id")
-                            .time(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(new Date()))
-                            .build())
-                    .build();
+            throw new InternalServerException("Some problem with searching route by id");
         }
     }
 
@@ -114,8 +91,7 @@ public class RouteRepository {
     public RouteEntity create(RouteDto route) {
         try {
             route.setId(null);
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-            route.setCreationDate(format.format(new Date()));
+            route.setCreationDate(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(new Date()));
             RouteEntity entity = RouteEntity.fromDto(route);
             entity.getCoordinates().setId(null);
             entity.getTo().setId(null);
@@ -128,12 +104,7 @@ public class RouteRepository {
             entityManager.persist(entity);
             return getById(entity.getId());
         } catch (Exception e) {
-            throw InternalServerException.builder()
-                    .error(ErrorDto.builder()
-                            .message("Some problem with creating route")
-                            .time(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(new Date()))
-                            .build())
-                    .build();
+            throw new InternalServerException("Some problem with creating route");
         }
     }
 
@@ -145,27 +116,16 @@ public class RouteRepository {
             entityManager.merge(entity);
             return entity;
         } catch (Exception e) {
-            throw InternalServerException.builder()
-                    .error(ErrorDto.builder()
-                            .message("Some problem with updating route by id")
-                            .time(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(new Date()))
-                            .build())
-                    .build();
+            throw new InternalServerException("Some problem with updating route by id");
         }
     }
 
     @Transactional
     public void deleteById(long routeId) {
-
         try {
             entityManager.remove(getById(routeId));
         } catch (Exception e) {
-            throw InternalServerException.builder()
-                    .error(ErrorDto.builder()
-                            .message("Some problem with deleting route by id")
-                            .time(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(new Date()))
-                            .build())
-                    .build();
+            throw new InternalServerException("Some problem with deleting route by id");
         }
     }
 
@@ -188,29 +148,14 @@ public class RouteRepository {
                             .build()
             ).collect(Collectors.toList());
         } catch (Exception e) {
-            throw InternalServerException.builder()
-                    .error(ErrorDto.builder()
-                            .message("Some problem with searching info about groups")
-                            .time(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(new Date()))
-                            .build())
-                    .build();
+            throw new InternalServerException("Some problem with searching info about groups");
         }
     }
 
     @Transactional
     public long getEqualDistanceRoutesCount(int distance) {
-        if (distance <= 1) throw InvalidQueryParamException.builder()
-                .invalidParams(List.of(InvalidParamDto.builder()
-                        .paramName("distance")
-                        .message("Distance can't be less or equal to 1")
-                        .build()))
-                .error(ErrorDto.builder()
-                        .message("Invalid query param distance")
-                        .time(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(new Date()))
-                        .build())
-                .build();
-
-
+        if (distance <= 1) throw new InvalidQueryParamException("distance",
+                "Distance can't be less or equal to 1", "Invalid query param distance");
         try {
             CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
             CriteriaQuery<Long> criteriaQuery = criteriaBuilder.createQuery(Long.class);
@@ -223,12 +168,7 @@ public class RouteRepository {
         } catch (InvalidQueryParamException e) {
             throw e;
         } catch (Exception e) {
-            throw InternalServerException.builder()
-                    .error(ErrorDto.builder()
-                            .message("Some problem with searching routes count by distance")
-                            .time(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(new Date()))
-                            .build())
-                    .build();
+            throw new InternalServerException("Some problem with searching routes count by distance");
         }
     }
 }

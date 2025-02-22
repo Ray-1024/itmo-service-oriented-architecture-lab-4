@@ -9,14 +9,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ray1024.soa.collectionservice.exception.InvalidInputException;
-import ray1024.soa.collectionservice.model.dto.ErrorDto;
-import ray1024.soa.collectionservice.model.dto.InvalidParamDto;
 import ray1024.soa.collectionservice.model.dto.RouteDto;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -66,16 +63,9 @@ public class RouteEntity {
                     .distance(routeDto.getDistance())
                     .build();
         } catch (ParseException e) {
-            throw InvalidInputException.builder()
-                    .invalidParams(List.of(InvalidParamDto.builder()
-                            .paramName("Route.creationDate")
-                            .message("Route.creationDate should be in format yyyy-MM-dd'T'HH:mm:ss'Z'")
-                            .build()))
-                    .error(ErrorDto.builder()
-                            .message("Wrong parameter formatting")
-                            .time(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(new Date()))
-                            .build())
-                    .build();
+            throw new InvalidInputException("Route.creationDate",
+                    "Route.creationDate should be in format yyyy-MM-dd'T'HH:mm:ss'Z'",
+                    "Wrong parameter formatting");
         }
     }
 }

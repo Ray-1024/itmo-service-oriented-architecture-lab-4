@@ -1,0 +1,10 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="CollectionServiceApplication-1" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <option name="ACTIVE_PROFILES" value="first" />
+    <module name="collection-service" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="ray1024.soa.collectionservice.CollectionServiceApplication" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

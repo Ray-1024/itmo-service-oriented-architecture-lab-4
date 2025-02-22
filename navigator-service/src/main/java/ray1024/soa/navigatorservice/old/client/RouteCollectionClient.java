@@ -1,4 +1,4 @@
-package ray1024.soa.navigatorservice.client;
+package ray1024.soa.navigatorservice.old.client;
 
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -12,9 +12,6 @@ import ray1024.soa.navigatorservice.exception.InvalidQueryParamException;
 import ray1024.soa.navigatorservice.exception.OtherErrorException;
 import ray1024.soa.navigatorservice.model.dto.ErrorDto;
 import ray1024.soa.navigatorservice.model.dto.RouteDto;
-import ray1024.soa.navigatorservice.model.response.ErrorResponse;
-import ray1024.soa.navigatorservice.model.response.InvalidParamsResponse;
-import ray1024.soa.navigatorservice.model.response.RouteCollectionResponse;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -24,9 +21,9 @@ import java.util.Objects;
 @Component
 @AllArgsConstructor
 public class RouteCollectionClient {
-    private final static String COLLECTION_SERVICE_BASE_URL = "http://localhost:22398/api/v1/routes";
+    private final static String COLLECTION_SERVICE_BASE_URL = "https://localhost:22400/api/v1/routes";
 
-    private final RestTemplate restTemplate = new RestTemplate();
+    private final RestTemplate restTemplate;
 
     public List<RouteDto> getAllRoutes(int pageSize, int pageNumber, String sort, String filter) {
         try {

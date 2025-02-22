@@ -1,8 +1,8 @@
-package ray1024.soa.navigatorservice.service;
+package ray1024.soa.navigatorservice.old.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import ray1024.soa.navigatorservice.client.RouteCollectionClient;
+import ray1024.soa.navigatorservice.old.client.RouteCollectionClient;
 import ray1024.soa.navigatorservice.model.dto.CoordinatesDto;
 import ray1024.soa.navigatorservice.model.dto.LocationDto;
 import ray1024.soa.navigatorservice.model.dto.RouteDto;
