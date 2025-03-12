@@ -13,11 +13,11 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @Builder
-public class InvalidQueryParamException extends RuntimeException {
+public class InvalidBodyParamException extends RuntimeException {
     private List<InvalidParamDto> invalidParams;
     private ErrorDto error;
 
-    public InvalidQueryParamException(String paramName, String paramMessage, String errorMessage) {
+    public InvalidBodyParamException(String paramName, String paramMessage, String errorMessage) {
         invalidParams = List.of(
                 InvalidParamDto.builder()
                         .paramName(paramName)

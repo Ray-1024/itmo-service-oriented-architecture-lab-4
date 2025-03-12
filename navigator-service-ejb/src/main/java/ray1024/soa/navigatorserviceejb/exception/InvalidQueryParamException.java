@@ -1,4 +1,4 @@
-package ray1024.soa.navigatorservice.exception;
+package ray1024.soa.navigatorserviceejb.exception;
 
 import lombok.*;
 import ray1024.soa.navigatorservice.model.dto.ErrorDto;

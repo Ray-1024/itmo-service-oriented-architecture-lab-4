@@ -1,4 +1,4 @@
-package ray1024.soa.navigatorservice.old.client;
+package ray1024.soa.navigatorserviceejb.client;
 
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
