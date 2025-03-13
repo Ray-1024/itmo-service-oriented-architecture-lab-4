@@ -1,10 +1,13 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="collection-service-2" type="JBossConfiguration" factoryName="Local" APPLICATION_SERVER_NAME="wildfly-27.0.1.Final-collection-service-2" ALTERNATIVE_JRE_ENABLED="true" ALTERNATIVE_JRE_PATH="17">
+  <configuration default="false" name="navigator-service-1" type="JBossConfiguration" factoryName="Local" APPLICATION_SERVER_NAME="wildfly-27.0.1.Final-navigator-service-1" ALTERNATIVE_JRE_ENABLED="true" ALTERNATIVE_JRE_PATH="17">
     <option name="OPEN_IN_BROWSER" value="false" />
     <option name="BROWSER_ID" value="2d6d3a43-e633-4531-8a76-68bc4db9f6f6" />
     <option name="UPDATING_POLICY" value="restart-server" />
     <deployment>
-      <artifact name="collection-service:war">
+      <artifact name="navigator-service:war">
+        <settings />
+      </artifact>
+      <artifact name="navigator-service-ejb:war">
         <settings />
       </artifact>
     </deployment>
@@ -14,7 +17,7 @@
       <option name="DOMAIN" value="false" />
       <option name="SERVER_GROUP" />
       <option name="USERNAME" value="ray1024" />
-      <option name="CREDENTIAL_ALIAS" value="d2177597-c2e2-4bf4-b5a2-c879bd3ddce8" />
+      <option name="CREDENTIAL_ALIAS" value="fb5737c7-fc2b-4f7c-abb0-78e7307a799a" />
     </server-settings>
     <predefined_log_file enabled="true" id="JBoss" />
     <RunnerSettings RunnerId="Debug">
@@ -68,7 +71,8 @@
     <method v="2">
       <option name="Make" enabled="true" />
       <option name="BuildArtifacts" enabled="true">
-        <artifact name="collection-service:war" />
+        <artifact name="navigator-service:war" />
+        <artifact name="navigator-service-ejb:war" />
       </option>
     </method>
   </configuration>

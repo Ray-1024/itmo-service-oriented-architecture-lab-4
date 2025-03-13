@@ -1,6 +1,6 @@
 package ray1024.soa.collectionservice.controller;
 
-import jakarta.websocket.server.PathParam;
+
 import lombok.AllArgsConstructor;
 import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.http.HttpStatus;
@@ -21,10 +21,10 @@ public class RouteController {
     private final RouteService routeService;
 
     @GetMapping
-    public RoutesDto getAll(@PathParam("size") @DefaultValue(value = "5") Integer size,
-                            @PathParam("page") @DefaultValue(value = "1") Integer page,
-                            @PathParam("sort") @DefaultValue(value = "") String sort,
-                            @PathParam("filter") @DefaultValue(value = "") String filter) {
+    public RoutesDto getAll(@RequestParam("size") @DefaultValue(value = "5") Integer size,
+                            @RequestParam("page") @DefaultValue(value = "1") Integer page,
+                            @RequestParam("sort") @DefaultValue(value = "") String sort,
+                            @RequestParam("filter") @DefaultValue(value = "") String filter) {
         if (size == null) size = 5;
         if (page == null) page = 1;
         return RoutesDto.builder()
@@ -69,7 +69,7 @@ public class RouteController {
     }
 
     @GetMapping("/with-distance-count")
-    public CountDto getEqualDistanceRoutesCount(@PathParam("distance") float distance) {
+    public CountDto getEqualDistanceRoutesCount(@RequestParam("distance") float distance) {
         return CountDto.builder()
                 .count((int) routeService.getEqualDistanceRoutesCount(distance))
                 .build();
