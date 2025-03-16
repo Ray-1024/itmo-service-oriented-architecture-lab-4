@@ -5,9 +5,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ray1024.soa.navigatorservice.ejb.RemoteNavigatorService;
+import ray1024.soa.navigatorservice.model.dto.NavigatorCreateRouteDto;
 import ray1024.soa.navigatorservice.model.dto.RouteDto;
-import ray1024.soa.navigatorservice.model.request.NavigatorCreateRouteRequest;
-import ray1024.soa.navigatorservice.model.response.RouteCollectionResponse;
+import ray1024.soa.navigatorservice.model.dto.RoutesDto;
 
 @AllArgsConstructor
 @RestController
@@ -17,11 +17,11 @@ public class NavigatorController {
     @GetMapping(value = "/api/v1/navigator/routes/{nameFrom}/{nameTo}/{orderBy}",
             consumes = MediaType.APPLICATION_XML_VALUE,
             produces = MediaType.APPLICATION_XML_VALUE)
-    public ResponseEntity<RouteCollectionResponse> getRoutes(@PathVariable String nameFrom,
-                                                             @PathVariable String nameTo,
-                                                             @PathVariable String orderBy) {
+    public ResponseEntity<RoutesDto> getRoutes(@PathVariable String nameFrom,
+                                               @PathVariable String nameTo,
+                                               @PathVariable String orderBy) {
         return ResponseEntity.ok(
-                RouteCollectionResponse.builder()
+                RoutesDto.builder()
                         .routes(remoteNavigatorService.getRoutesWithLocationNamesSorted(nameFrom, nameTo, orderBy))
                         .build());
     }
@@ -33,7 +33,7 @@ public class NavigatorController {
             @PathVariable("name-from") String nameFrom,
             @PathVariable("name-to") String nameTo,
             @PathVariable float distance,
-            @RequestBody NavigatorCreateRouteRequest navigatorCreateRouteRequest
+            @RequestBody NavigatorCreateRouteDto navigatorCreateRouteRequest
     ) {
         return remoteNavigatorService.createRouteByLocationsNames(
                 nameFrom,

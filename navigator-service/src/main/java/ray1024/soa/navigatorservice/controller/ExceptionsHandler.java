@@ -5,8 +5,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import ray1024.soa.navigatorservice.exception.*;
-import ray1024.soa.navigatorservice.model.response.ErrorResponse;
-import ray1024.soa.navigatorservice.model.response.InvalidParamsResponse;
+import ray1024.soa.navigatorservice.model.dto.ErrorDto;
+import ray1024.soa.navigatorservice.model.dto.InvalidParamsDto;
 
 import static org.springframework.http.HttpStatus.*;
 
@@ -17,9 +17,9 @@ public class ExceptionsHandler {
     @ExceptionHandler({
             CollectionServiceAccessException.class,
     })
-    public ResponseEntity<ErrorResponse> handleCollectionServiceAccessException(CollectionServiceAccessException e) {
+    public ResponseEntity<ErrorDto> handleCollectionServiceAccessException(CollectionServiceAccessException e) {
         return ResponseEntity.status(SERVICE_UNAVAILABLE)
-                .body(ErrorResponse.builder()
+                .body(ErrorDto.builder()
                         .message(e.getError().getMessage())
                         .time(e.getError().getTime())
                         .build());
@@ -28,9 +28,9 @@ public class ExceptionsHandler {
     @ExceptionHandler({
             InternalServerException.class,
     })
-    public ResponseEntity<ErrorResponse> handleInternalServerException(InternalServerException e) {
+    public ResponseEntity<ErrorDto> handleInternalServerException(InternalServerException e) {
         return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(
-                ErrorResponse.builder()
+                ErrorDto.builder()
                         .message(e.getError().getMessage())
                         .time(e.getError().getTime())
                         .build()
@@ -40,8 +40,8 @@ public class ExceptionsHandler {
     @ExceptionHandler({
             InvalidInputException.class,
     })
-    public ResponseEntity<InvalidParamsResponse> handleInvalidInputException(InvalidInputException e) {
-        return ResponseEntity.badRequest().body(InvalidParamsResponse.builder()
+    public ResponseEntity<InvalidParamsDto> handleInvalidInputException(InvalidInputException e) {
+        return ResponseEntity.badRequest().body(InvalidParamsDto.builder()
                 .invalidParams(e.getInvalidParams())
                 .error(e.getError())
                 .build());
@@ -50,9 +50,9 @@ public class ExceptionsHandler {
     @ExceptionHandler({
             InvalidQueryParamException.class,
     })
-    public ResponseEntity<InvalidParamsResponse> handleInvalidQueryParamException(InvalidQueryParamException e) {
+    public ResponseEntity<InvalidParamsDto> handleInvalidQueryParamException(InvalidQueryParamException e) {
         return ResponseEntity.badRequest().body(
-                InvalidParamsResponse.builder()
+                InvalidParamsDto.builder()
                         .invalidParams(e.getInvalidParams())
                         .error(e.getError())
                         .build()
@@ -62,9 +62,9 @@ public class ExceptionsHandler {
     @ExceptionHandler({
             OtherErrorException.class,
     })
-    public ResponseEntity<ErrorResponse> handleOtherErrorException(OtherErrorException e) {
+    public ResponseEntity<ErrorDto> handleOtherErrorException(OtherErrorException e) {
         return ResponseEntity.status(NOT_FOUND).body(
-                ErrorResponse.builder()
+                ErrorDto.builder()
                         .message(e.getError().getMessage())
                         .time(e.getError().getTime())
                         .build()

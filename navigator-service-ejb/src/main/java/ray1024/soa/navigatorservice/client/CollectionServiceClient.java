@@ -1,30 +1,33 @@
-package ray1024.soa.navigatorservice.old.client;
+package ray1024.soa.navigatorservice.client;
 
-import lombok.AllArgsConstructor;
+import jakarta.enterprise.context.ApplicationScoped;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 import ray1024.soa.navigatorservice.exception.CollectionServiceAccessException;
+import ray1024.soa.navigatorservice.exception.InternalServerException;
+import ray1024.soa.navigatorservice.exception.InvalidQueryParamException;
+import ray1024.soa.navigatorservice.exception.OtherErrorException;
 import ray1024.soa.navigatorservice.model.dto.ErrorDto;
+import ray1024.soa.navigatorservice.model.dto.InvalidParamsDto;
 import ray1024.soa.navigatorservice.model.dto.RouteDto;
+import ray1024.soa.navigatorservice.model.dto.RoutesDto;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-@Component
-@AllArgsConstructor
-public class RouteCollectionClient {
-    private final static String COLLECTION_SERVICE_BASE_URL = "https://localhost:22400/api/v1/routes";
+@ApplicationScoped
+public class CollectionServiceClient {
+    private final static String COLLECTION_SERVICE_BASE_URL = "http://localhost:7000/api/v1/routes";
 
-    private final RestTemplate restTemplate;
+    private final RestTemplate restTemplate = new RestTemplate();
 
     public List<RouteDto> getAllRoutes(int pageSize, int pageNumber, String sort, String filter) {
         try {
-            RouteCollectionResponse response = restTemplate.getForObject(
+            RoutesDto response = restTemplate.getForObject(
                     COLLECTION_SERVICE_BASE_URL +
                             "?size=" +
                             pageSize +
@@ -34,12 +37,12 @@ public class RouteCollectionClient {
                             sort +
                             "&filter=" +
                             filter,
-                    RouteCollectionResponse.class
+                    RoutesDto.class
             );
             return response.getRoutes();
         } catch (HttpClientErrorException e) {
             if (e.getStatusCode() == HttpStatus.BAD_REQUEST) {
-                InvalidParamsResponse response = e.getResponseBodyAs(InvalidParamsResponse.class);
+                InvalidParamsDto response = e.getResponseBodyAs(InvalidParamsDto.class);
                 if (Objects.isNull(response)) {
                     throw CollectionServiceAccessException.builder()
                             .error(ErrorDto.builder()
@@ -53,7 +56,7 @@ public class RouteCollectionClient {
                         .error(response.getError())
                         .build();
             } else if (e.getStatusCode() == HttpStatus.NOT_FOUND) {
-                ErrorResponse response = e.getResponseBodyAs(ErrorResponse.class);
+                ErrorDto response = e.getResponseBodyAs(ErrorDto.class);
                 if (Objects.isNull(response)) {
                     throw CollectionServiceAccessException.builder()
                             .error(ErrorDto.builder()
@@ -78,7 +81,7 @@ public class RouteCollectionClient {
             }
         } catch (HttpServerErrorException e) {
             if (e.getStatusCode() == HttpStatus.INTERNAL_SERVER_ERROR) {
-                ErrorResponse response = e.getResponseBodyAs(ErrorResponse.class);
+                ErrorDto response = e.getResponseBodyAs(ErrorDto.class);
                 if (Objects.isNull(response)) {
                     throw CollectionServiceAccessException.builder()
                             .error(ErrorDto.builder()
@@ -121,7 +124,7 @@ public class RouteCollectionClient {
             return response;
         } catch (HttpClientErrorException e) {
             if (e.getStatusCode() == HttpStatus.UNPROCESSABLE_ENTITY) {
-                InvalidParamsResponse response = e.getResponseBodyAs(InvalidParamsResponse.class);
+                InvalidParamsDto response = e.getResponseBodyAs(InvalidParamsDto.class);
                 if (Objects.isNull(response)) {
                     throw CollectionServiceAccessException.builder()
                             .error(ErrorDto.builder()
@@ -144,7 +147,7 @@ public class RouteCollectionClient {
             }
         } catch (HttpServerErrorException e) {
             if (e.getStatusCode() == HttpStatus.INTERNAL_SERVER_ERROR) {
-                ErrorResponse response = e.getResponseBodyAs(ErrorResponse.class);
+                ErrorDto response = e.getResponseBodyAs(ErrorDto.class);
                 if (Objects.isNull(response)) {
                     throw CollectionServiceAccessException.builder()
                             .error(ErrorDto.builder()
