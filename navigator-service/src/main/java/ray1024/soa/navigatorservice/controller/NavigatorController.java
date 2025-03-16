@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ray1024.soa.navigatorservice.ejb.RemoteNavigatorService;
+import ray1024.soa.navigatorservice.ejb.service.RemoteNavigatorService;
 import ray1024.soa.navigatorservice.model.dto.NavigatorCreateRouteDto;
 import ray1024.soa.navigatorservice.model.dto.RouteDto;
 import ray1024.soa.navigatorservice.model.dto.RoutesDto;

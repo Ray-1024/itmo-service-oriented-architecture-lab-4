@@ -20,10 +20,14 @@ frontend http_front
     mode http
     bind *:7000
     default_backend service_backend
+    http-response add-header Access-Control-Allow-Origin "*"
+    http-response add-header Access-Control-Allow-Methods "GET, POST, DELETE, PUT"
+    http-response add-header Access-Control-Allow-Headers "Origin, X-Requested-With, Content-Type, Accept"
+    http-response add-header Access-Control-Allow-Credentials "true"
 
 backend service_backend
     mode http
     balance roundrobin
 {{ range service "collection-service" }}
-    server {{ .Node }}-{{ .Port }} {{ .Address }}:{{ .Port }} check
+    server collection-service-{{ .Port }} {{ .Address }}:{{ .Port }} check
 {{ end }}
