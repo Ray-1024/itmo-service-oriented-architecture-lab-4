@@ -18,7 +18,7 @@ public class JndiConfig {
     @Bean
     public RemoteNavigatorService remoteNavigatorService(JndiTemplate jndiTemplate) throws NamingException {
         String path = "ejb:/%s/%s!%s".formatted(
-                "navigator-service-ejb-1.0-SNAPSHOT", "RemoteNavigatorService",
+                "navigator-service-ejb-0.0.1-SNAPSHOT", "RemoteNavigatorService",
                 RemoteNavigatorService.class.getName()
         );
         return jndiTemplate.lookup(path, RemoteNavigatorService.class);

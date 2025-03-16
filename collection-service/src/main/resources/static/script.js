@@ -298,7 +298,7 @@ const modes = {
         executeRequest: async function () {
             utils.clearErrors();
             utils.resultText('');
-            const url = new URL('https://localhost:18443/api/v1/routes');
+            const url = new URL('http://localhost:7000/api/v1/routes');
             const fields = utils.getFields();
             if (fields.pageSize !== undefined ?? fields.pageNumber !== undefined) {
                 url.searchParams.append('size', `${fields.pageSize}`);
@@ -316,7 +316,8 @@ const modes = {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/xml',
-                        'Accept': 'application/xml'
+                        'Accept': 'application/xml',
+                        'Access-Control-Allow-Origin' : '*'
                     },
                 });
                 const data = await response.text();
@@ -357,7 +358,7 @@ const modes = {
         executeRequest: async function () {
             utils.clearErrors();
             utils.resultText('');
-            const url = new URL('https://localhost:18443/api/v1/routes');
+            const url = new URL('http://localhost:7000/api/v1/routes');
             const fields = utils.getFields();
             let from = fields.routeFromX === undefined ? '' :
                 `<from>
@@ -372,7 +373,8 @@ const modes = {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/xml',
-                        'Accept': 'application/xml'
+                        'Accept': 'application/xml',
+                        'Access-Control-Allow-Origin' : '*'
                     },
                     body: `
                     <route>
@@ -413,7 +415,7 @@ const modes = {
             utils.clearErrors();
             utils.resultText('');
             const fields = utils.getFields();
-            const url = new URL(`https://localhost:18443/api/v1/routes/${fields.routeId}`);
+            const url = new URL(`http://localhost:7000/api/v1/routes/${fields.routeId}`);
             try {
                 const response = await fetch(url, {
 
@@ -421,6 +423,7 @@ const modes = {
                     headers: {
                         'Content-Type': 'application/xml',
                         'Accept': 'application/xml',
+                        'Access-Control-Allow-Origin' : '*'
                     },
                 });
                 const data = await response.text();
@@ -459,7 +462,7 @@ const modes = {
             utils.clearErrors();
             utils.resultText('');
             const fields = utils.getFields();
-            const url = new URL(`https://localhost:18443/api/v1/routes/${fields.routeId}`);
+            const url = new URL(`http://localhost:7000/api/v1/routes/${fields.routeId}`);
             let from = fields.routeFromX === undefined ? '' :
                 `<from>
                     <x>${fields.routeFromX}</x>
@@ -473,7 +476,8 @@ const modes = {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/xml',
-                        'Accept': 'application/xml'
+                        'Accept': 'application/xml',
+                        'Access-Control-Allow-Origin' : '*'
                     },
                     body: `
                     <route>
@@ -516,7 +520,7 @@ const modes = {
             utils.clearErrors();
             utils.resultText('');
             const fields = utils.getFields();
-            const url = new URL(`https://localhost:18443/api/v1/routes/${fields.routeId}`);
+            const url = new URL(`http://localhost:7000/api/v1/routes/${fields.routeId}`);
             try {
                 const response = await fetch(url, {
 
@@ -524,6 +528,7 @@ const modes = {
                     headers: {
                         'Content-Type': 'application/xml',
                         'Accept': 'application/xml',
+                        'Access-Control-Allow-Origin' : '*'
                     },
                 });
                 const data = await response.text();
@@ -543,14 +548,15 @@ const modes = {
         executeRequest: async function () {
             utils.clearErrors();
             utils.resultText('');
-            const url = new URL('https://localhost:18443/api/v1/routes/name-groups-info');
+            const url = new URL('http://localhost:7000/api/v1/routes/name-groups-info');
             try {
                 const response = await fetch(url, {
 
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/xml',
-                        'Accept': 'application/xml'
+                        'Accept': 'application/xml',
+                        'Access-Control-Allow-Origin' : '*'
                     }
                 });
                 const data = await response.text();
@@ -578,7 +584,7 @@ const modes = {
             utils.clearErrors();
             utils.resultText('');
             const fields = utils.getFields();
-            const url = new URL('https://localhost:18443/api/v1/routes/with-distance-count');
+            const url = new URL('http://localhost:7000/api/v1/routes/with-distance-count');
             url.searchParams.append('distance', fields.routeDistance);
             try {
                 const response = await fetch(url, {
@@ -586,7 +592,8 @@ const modes = {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/xml',
-                        'Accept': 'application/xml'
+                        'Accept': 'application/xml',
+                        'Access-Control-Allow-Origin' : '*'
                     }
                 });
                 const data = await response.text();
@@ -620,13 +627,14 @@ const modes = {
                 utils.error('Не указана сортировка');
                 return;
             }
-            const url = new URL(`https://localhost:28443/api/v1/navigator/routes/${fields.routeFromName}/${fields.routeToName}/${fields.sorting}`);
+            const url = new URL(`http://localhost:7001/api/v1/navigator/routes/${fields.routeFromName}/${fields.routeToName}/${fields.sorting}`);
             try {
                 const response = await fetch(url, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/xml',
-                        'Accept': 'application/xml'
+                        'Accept': 'application/xml',
+                        'Access-Control-Allow-Origin' : '*'
                     }
                 });
                 const data = await response.text();
@@ -663,14 +671,15 @@ const modes = {
             utils.clearErrors();
             utils.resultText('');
             const fields = utils.getFields();
-            const url = new URL(`https://localhost:28443/api/v1/navigator/route/add/${fields.routeFromName}/${fields.routeToName}/${fields.routeDistance}`);
+            const url = new URL(`http://localhost:7001/api/v1/navigator/route/add/${fields.routeFromName}/${fields.routeToName}/${fields.routeDistance}`);
             try {
                 const response = await fetch(url, {
 
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/xml',
-                        'Accept': 'application/xml'
+                        'Accept': 'application/xml',
+                        'Access-Control-Allow-Origin' : '*'
                     },
                     body: `
                     <request>

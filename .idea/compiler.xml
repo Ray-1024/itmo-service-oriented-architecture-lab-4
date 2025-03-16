@@ -10,7 +10,7 @@
         <module name="navigator-service-ejb" />
         <module name="collection-service" />
       </profile>
-      <profile name="Annotation profile for navigator-service-ejb" enabled="true">
+      <profile name="Annotation profile for navigator-service" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
