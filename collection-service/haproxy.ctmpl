@@ -24,6 +24,6 @@ frontend http_front
 backend service_backend
     mode http
     balance roundrobin
-{{ range service "service-1" }}
+{{ range service "collection-service" }}
     server {{ .Node }}-{{ .Port }} {{ .Address }}:{{ .Port }} check
 {{ end }}

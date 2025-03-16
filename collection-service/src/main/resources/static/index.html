@@ -1,0 +1,193 @@
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Frontend</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+
+<div id="chooseMode" class="framedBlock">
+    <div class="framedBlockHeader">Выбор действия</div>
+    <div>
+        <input type="button" value="Получить список путей" onclick="applyMode(modes.getRoutes)">
+        <input type="button" value="Получить путь по ID" onclick="applyMode(modes.getRoute)">
+        <input type="button" value="Создать путь" onclick="applyMode(modes.createRoute)">
+        <input type="button" value="Изменить путь по ID" onclick="applyMode(modes.updateRoute)">
+        <input type="button" value="Удалить путь по ID" onclick="applyMode(modes.deleteRoute)">
+        <input type="button" value="Получить размеры групп" onclick="applyMode(modes.groupInfo)">
+        <input type="button" value="Получить пути заданной длины" onclick="applyMode(modes.getDistanceRoute)">
+        <input type="button" value="Получить все пути между заданными локациями"
+               onclick="applyMode(modes.getNavigator)">
+        <input type="button" value="Создать путь между заданными локациями" onclick="applyMode(modes.createNavigator)">
+    </div>
+</div>
+
+<div id="requestDiv" class="framedBlock">
+
+    <div id="headerDiv" class="framedBlockHeader"></div>
+
+    <div id="fieldsDiv">
+
+
+        <div id="pagingDiv" class="framedBlock">
+            <div id="hidePagingDiv">
+                Не указывать параметры страницы:
+                <input id="hidePaging" type="checkbox" onclick="
+            if(document.getElementById('hidePaging').checked){
+                utils.hide('pageNumberDiv');
+                utils.hide('pageSizeDiv');
+            }
+            else{
+                utils.show('pageNumberDiv');
+                utils.show('pageSizeDiv');
+            }
+"></div>
+            <div id="paging">
+                <div id="pageNumberDiv">Номер страницы: <input type="number" id="pageNumber" min="1" value="1"></div>
+                <div id="pageSizeDiv"> Размер страницы: <input type="number" id="pageSize" min="1" max="100" value="5">
+                </div>
+            </div>
+        </div>
+
+
+        <div id="sortingDiv" class="framedBlock">
+            <div>Указанные параметры сортировки:
+                <div id="sortingParamsList"></div>
+            </div>
+            <div id="sortingFieldDiv">Поле для сортировки путей: <select id="sortingField">
+                <option>id</option>
+                <option>name</option>
+                <option>coordinates.x</option>
+                <option>coordinates.y</option>
+                <option>creationDate</option>
+                <option>from.x</option>
+                <option>from.y</option>
+                <option>from.z</option>
+                <option>from.name</option>
+                <option>to.x</option>
+                <option>to.y</option>
+                <option>to.name</option>
+                <option>distance</option>
+            </select></div>
+            <div id="sortingOrderDiv">Порядок сортировки:
+                <input type="radio" name="sortingOrder" value="" checked>По неубыванию
+                <input type="radio" name="sortingOrder" value="<">По невозрастанию
+            </div>
+            <div>
+                <button onclick="
+                    document.getElementById('sortingParamsList').innerText +=
+                    (document.getElementById('sortingParamsList').innerText === '' ? '' : ';') +
+                    utils.asString('sortingOrder') + utils.asString('sortingField');
+                    ">Добавить параметр сортировки
+                </button>
+                <button onclick="document.getElementById('sortingParamsList').innerText = '';">Очистить параметры
+                    сортировки
+                </button>
+            </div>
+        </div>
+
+
+        <div id="filteringDiv" class="framedBlock">
+            <div>Указанные параметры фильтрации:
+                <div id="filteringParamsList"></div>
+            </div>
+            <div id="filteringFieldDiv">Поле для фильтрации путей: <select id="filteringField">
+                <option>id</option>
+                <option>name</option>
+                <option>coordinates.x</option>
+                <option>coordinates.y</option>
+                <option>creationDate</option>
+                <option>from.x</option>
+                <option>from.y</option>
+                <option>from.z</option>
+                <option>from.name</option>
+                <option>to.x</option>
+                <option>to.y</option>
+                <option>to.name</option>
+                <option>distance</option>
+            </select></div>
+            <div id="filteringComparatorDiv">Условие фильтрации:<select id="filteringComparator">
+                <option>=</option>
+                <option>!=</option>
+                <option><</option>
+                <option>></option>
+                <option><=</option>
+                <option>>=</option>
+            </select></div>
+            <div id="filteringValueDiv">Значение для условия фильтрации:<input type="text" id="filteringValue"></div>
+            <div>
+                <button onclick="
+                    document.getElementById('filteringParamsList').innerText +=
+                    (document.getElementById('filteringParamsList').innerText === '' ? '' : ';') +
+                    utils.asString('filteringField') +
+                    utils.asString('filteringComparator') +
+                    utils.asString('filteringValue');
+                    ">Добавить параметр фильтрации
+                </button>
+                <button onclick="document.getElementById('filteringParamsList').innerText = '';">Очистить параметры
+                    фильтрации
+                </button>
+            </div>
+        </div>
+
+
+        <div id="routeDiv" class="framedBlock">
+            <div id="routeIdDiv">id: <input type="number" id="routeId" min="1" value="1"></div>
+            <div id="routeNameDiv">name: <input type="text" id="routeName" value="name"></div>
+            <div id="routeCoordinatesXDiv">coordinates.x: <input type="number" id="routeCoordinatesX" max="510"
+                                                                 value="1"></div>
+            <div id="routeCoordinatesYDiv">coordinates.y: <input type="number" id="routeCoordinatesY" value="1"></div>
+            <div id="routeCreationDateDiv">creationDate: <input type="date" id="routeCreationDate" value="2025-02-12">
+            </div>
+            <div class="framedBlock" id="routeFromFramedBlock">
+                <div id="hideFromDiv">
+                    Не указывать параметры локации From:
+                    <input id="hideFrom" type="checkbox" onclick="
+            if(document.getElementById('hideFrom').checked){
+                utils.hide('routeFromXDiv');
+                utils.hide('routeFromYDiv');
+                utils.hide('routeFromZDiv');
+                utils.hide('routeFromNameDiv');
+            }
+            else{
+                utils.show('routeFromXDiv');
+                utils.show('routeFromYDiv');
+                utils.show('routeFromZDiv');
+                utils.show('routeFromNameDiv');
+            }
+">
+                </div>
+                <div id="routeFromXDiv">from.x: <input type="number" id="routeFromX" value="0"></div>
+                <div id="routeFromYDiv">from.y: <input type="number" id="routeFromY" value="0"></div>
+                <div id="routeFromZDiv">from.z: <input type="number" id="routeFromZ" value="0"></div>
+                <div id="routeFromNameDiv">from.name: <input type="text" id="routeFromName" maxlength="452"
+                                                             value="from">
+                </div>
+            </div>
+            <div id="routeToXDiv">to.x: <input type="number" id="routeToX" value="0"></div>
+            <div id="routeToYDiv">to.y: <input type="number" id="routeToY" value="0"></div>
+            <div id="routeToZDiv">to.z: <input type="number" id="routeToZ" value="0"></div>
+            <div id="routeToNameDiv">to.name: <input type="text" id="routeToName" maxlength="452" value="to"></div>
+            <div id="routeDistanceDiv">distance: <input type="number" id="routeDistance" min="2" value="2"></div>
+        </div>
+
+
+        <div id="errorDiv" class="errorBlock"></div>
+
+
+        <div id="submitDiv" class="framedBlockHeader">
+            <input type="button" value="Поехали" onclick="currentMode.executeRequest()">
+        </div>
+
+
+        <div id="resultDiv" class="framedBlockResult"></div>
+    </div>
+</div>
+
+<script src="script.js"></script>
+
+</body>
+
+</html>
