@@ -1,4 +1,4 @@
-package ray1024.soa.navigatorserviceejb.model.dto;
+package ray1024.soa.navigatorservice.model.dto;
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;

@@ -1,4 +1,4 @@
-package ray1024.soa.navigatorserviceejb.model.dto;
+package ray1024.soa.navigatorservice.model.dto;
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
@@ -15,10 +15,9 @@ import java.util.List;
 @Data
 @Builder
 @JacksonXmlRootElement(localName = "response")
-public class RoutesDto {
-    @JacksonXmlElementWrapper(localName = "routes")
-    @JacksonXmlProperty(localName = "route")
-    private List<RouteDto> routes;
+public class InvalidParamsDto {
+    @JacksonXmlElementWrapper(localName = "invalidParams")
+    private List<InvalidParamDto> invalidParams;
     @JacksonXmlProperty
-    private int currentPageNumber;
+    private ErrorDto error;
 }

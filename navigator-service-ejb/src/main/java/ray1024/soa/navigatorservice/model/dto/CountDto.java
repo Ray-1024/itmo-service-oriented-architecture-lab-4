@@ -1,6 +1,5 @@
-package ray1024.soa.navigatorserviceejb.model.dto;
+package ray1024.soa.navigatorservice.model.dto;
 
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import lombok.AllArgsConstructor;
@@ -8,16 +7,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
 @Builder
+@Data
 @JacksonXmlRootElement(localName = "response")
-public class InvalidParamsDto {
-    @JacksonXmlElementWrapper(localName = "invalidParams")
-    private List<InvalidParamDto> invalidParams;
+public class CountDto {
     @JacksonXmlProperty
-    private ErrorDto error;
+    private int count;
 }

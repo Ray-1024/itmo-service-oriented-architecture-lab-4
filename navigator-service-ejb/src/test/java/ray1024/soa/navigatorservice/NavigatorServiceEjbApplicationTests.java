@@ -1,4 +1,4 @@
-package ray1024.soa.navigatorserviceejb;
+package ray1024.soa.navigatorservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,4 +1,4 @@
-package ray1024.soa.navigatorserviceejb.model.dto;
+package ray1024.soa.navigatorservice.model.dto;
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
@@ -11,10 +11,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Builder
-@JacksonXmlRootElement(localName = "group")
-public class GroupInfoDto {
+@JacksonXmlRootElement(localName = "error")
+public class ErrorDto {
     @JacksonXmlProperty
-    private String name;
+    private String message;
     @JacksonXmlProperty
-    private int count;
+    private String time;
 }

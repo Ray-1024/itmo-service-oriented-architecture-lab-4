@@ -1,27 +1,35 @@
-package ray1024.soa.navigatorserviceejb.client;
+package ray1024.soa.navigatorservice.ejb.service;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
+import jakarta.ejb.Stateless;
+import org.jboss.ejb3.annotation.Pool;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
-import ray1024.soa.navigatorserviceejb.exception.CollectionServiceAccessException;
-import ray1024.soa.navigatorserviceejb.model.dto.*;
+import ray1024.soa.navigatorservice.exception.CollectionServiceAccessException;
+import ray1024.soa.navigatorservice.exception.InternalServerException;
+import ray1024.soa.navigatorservice.exception.InvalidQueryParamException;
+import ray1024.soa.navigatorservice.exception.OtherErrorException;
+import ray1024.soa.navigatorservice.model.dto.ErrorDto;
+import ray1024.soa.navigatorservice.model.dto.InvalidParamsDto;
+import ray1024.soa.navigatorservice.model.dto.RouteDto;
+import ray1024.soa.navigatorservice.model.dto.RoutesDto;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-@ApplicationScoped
-public class RouteCollectionClient {
-    private final static String COLLECTION_SERVICE_BASE_URL = "https://localhost:22400/api/v1/routes";
+@Stateless(name = "RemoteCollectionService")
+@Pool("remote-collection-service-pool")
+public class RemoteCollectionServiceImpl implements RemoteCollectionService {
 
-    @Inject
-    private final RestTemplate restTemplate;
+    private final static String COLLECTION_SERVICE_BASE_URL = "http://localhost:7000/api/v1/routes";
 
-    public List<RouteDto> getAllRoutes(int pageSize, int pageNumber, String sort, String filter) {
+    private final RestTemplate restTemplate = new RestTemplate();
+
+    @Override
+    public List<RouteDto> getAll(int pageSize, int pageNumber, String sort, String filter) {
         try {
             RoutesDto response = restTemplate.getForObject(
                     COLLECTION_SERVICE_BASE_URL +
@@ -47,7 +55,7 @@ public class RouteCollectionClient {
                                     .build())
                             .build();
                 }
-                throw InvalidParamsDto.builder()
+                throw InvalidQueryParamException.builder()
                         .invalidParams(response.getInvalidParams())
                         .error(response.getError())
                         .build();
@@ -77,7 +85,7 @@ public class RouteCollectionClient {
             }
         } catch (HttpServerErrorException e) {
             if (e.getStatusCode() == HttpStatus.INTERNAL_SERVER_ERROR) {
-                ErrorResponse response = e.getResponseBodyAs(ErrorResponse.class);
+                ErrorDto response = e.getResponseBodyAs(ErrorDto.class);
                 if (Objects.isNull(response)) {
                     throw CollectionServiceAccessException.builder()
                             .error(ErrorDto.builder()
@@ -110,7 +118,8 @@ public class RouteCollectionClient {
         }
     }
 
-    public RouteDto createRoute(RouteDto routeDto) {
+    @Override
+    public RouteDto create(RouteDto routeDto) {
         try {
             RouteDto response = restTemplate.postForObject(
                     COLLECTION_SERVICE_BASE_URL,
@@ -120,7 +129,7 @@ public class RouteCollectionClient {
             return response;
         } catch (HttpClientErrorException e) {
             if (e.getStatusCode() == HttpStatus.UNPROCESSABLE_ENTITY) {
-                InvalidParamsResponse response = e.getResponseBodyAs(InvalidParamsResponse.class);
+                InvalidParamsDto response = e.getResponseBodyAs(InvalidParamsDto.class);
                 if (Objects.isNull(response)) {
                     throw CollectionServiceAccessException.builder()
                             .error(ErrorDto.builder()
@@ -143,7 +152,7 @@ public class RouteCollectionClient {
             }
         } catch (HttpServerErrorException e) {
             if (e.getStatusCode() == HttpStatus.INTERNAL_SERVER_ERROR) {
-                ErrorResponse response = e.getResponseBodyAs(ErrorResponse.class);
+                ErrorDto response = e.getResponseBodyAs(ErrorDto.class);
                 if (Objects.isNull(response)) {
                     throw CollectionServiceAccessException.builder()
                             .error(ErrorDto.builder()

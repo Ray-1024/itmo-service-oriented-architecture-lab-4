@@ -1,4 +1,4 @@
-package ray1024.soa.navigatorserviceejb.exception;
+package ray1024.soa.navigatorservice.exception;
 
 import lombok.*;
 import ray1024.soa.navigatorservice.model.dto.ErrorDto;
@@ -13,11 +13,11 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @Builder
-public class InvalidBodyParamException extends RuntimeException {
+public class InvalidQueryParamException extends RuntimeException {
     private List<InvalidParamDto> invalidParams;
     private ErrorDto error;
 
-    public InvalidBodyParamException(String paramName, String paramMessage, String errorMessage) {
+    public InvalidQueryParamException(String paramName, String paramMessage, String errorMessage) {
         invalidParams = List.of(
                 InvalidParamDto.builder()
                         .paramName(paramName)

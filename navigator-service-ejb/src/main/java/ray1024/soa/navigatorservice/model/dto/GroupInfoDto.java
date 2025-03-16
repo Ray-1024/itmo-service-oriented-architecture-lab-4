@@ -1,4 +1,4 @@
-package ray1024.soa.navigatorserviceejb.model.dto;
+package ray1024.soa.navigatorservice.model.dto;
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
@@ -9,10 +9,12 @@ import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @Data
-@JacksonXmlRootElement(localName = "response")
-public class CountDto {
+@Builder
+@JacksonXmlRootElement(localName = "group")
+public class GroupInfoDto {
+    @JacksonXmlProperty
+    private String name;
     @JacksonXmlProperty
     private int count;
 }
