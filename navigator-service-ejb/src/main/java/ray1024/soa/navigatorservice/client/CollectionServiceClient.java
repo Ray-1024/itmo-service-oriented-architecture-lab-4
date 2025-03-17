@@ -3,7 +3,7 @@ package ray1024.soa.navigatorservice.client;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.*;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
@@ -32,7 +32,23 @@ public class CollectionServiceClient {
 
     public List<RouteDto> getAllRoutes(int pageSize, int pageNumber, String sort, String filter) {
         try {
-            RoutesDto response = restTemplate.getForObject(
+//            String response = restTemplate.getForObject(
+//                    COLLECTION_SERVICE_BASE_URL +
+//                            "?size=" +
+//                            pageSize +
+//                            "&page=" +
+//                            pageNumber +
+//                            "&sort=" +
+//                            sort +
+//                            "&filter=" +
+//                            filter,
+//                    String.class
+//            );
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_XML);
+            headers.setAccept(List.of(MediaType.APPLICATION_XML));
+            HttpEntity<String> httpEntity = new HttpEntity<>("", headers);
+            ResponseEntity<String> response = restTemplate.exchange(
                     COLLECTION_SERVICE_BASE_URL +
                             "?size=" +
                             pageSize +
@@ -42,9 +58,12 @@ public class CollectionServiceClient {
                             sort +
                             "&filter=" +
                             filter,
-                    RoutesDto.class
+                    HttpMethod.GET,
+                    httpEntity,
+                    String.class
             );
-            return response.getRoutes();
+            RoutesDto routesDto = xmlMapper.readValue(response.getBody(), RoutesDto.class);
+            return routesDto.getRoutes();
         } catch (HttpClientErrorException e) {
             if (e.getStatusCode() == HttpStatus.BAD_REQUEST) {
                 InvalidParamsDto response = e.getResponseBodyAs(InvalidParamsDto.class);
@@ -121,12 +140,22 @@ public class CollectionServiceClient {
 
     public RouteDto createRoute(RouteDto routeDto) {
         try {
-            RouteDto response = restTemplate.postForObject(
+//            String response = restTemplate.postForObject(
+//                    COLLECTION_SERVICE_BASE_URL,
+//                    routeDto,
+//                    String.class
+//            );
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_XML);
+            headers.setAccept(List.of(MediaType.APPLICATION_XML));
+            HttpEntity<String> httpEntity = new HttpEntity<>(xmlMapper.writeValueAsString(routeDto), headers);
+            ResponseEntity<String> response = restTemplate.exchange(
                     COLLECTION_SERVICE_BASE_URL,
-                    routeDto,
-                    RouteDto.class
+                    HttpMethod.POST,
+                    httpEntity,
+                    String.class
             );
-            return response;
+            return xmlMapper.readValue(response.getBody(), RouteDto.class);
         } catch (HttpClientErrorException e) {
             if (e.getStatusCode() == HttpStatus.UNPROCESSABLE_ENTITY) {
                 InvalidParamsDto response = e.getResponseBodyAs(InvalidParamsDto.class);
@@ -184,5 +213,4 @@ public class CollectionServiceClient {
                     .build();
         }
     }
-
 }

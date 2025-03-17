@@ -21,8 +21,8 @@ public class JndiConfig {
                 "navigator-service-ejb-0.0.1-SNAPSHOT", "RemoteNavigatorService",
                 RemoteNavigatorService.class.getName()
         );
-//        return jndiTemplate.lookup(path, RemoteNavigatorService.class);
-        return jndiTemplate.lookup("java:global/navigator-service-ejb-0.0.1-SNAPSHOT/RemoteCollectionService!ray1024.soa.navigatorservice.ejb.service.RemoteNavigatorService", RemoteNavigatorService.class);
+        return jndiTemplate.lookup(path, RemoteNavigatorService.class);
+//        return jndiTemplate.lookup("ejb:/navigator-service-ejb-0.0.1-SNAPSHOT/RemoteCollectionService!ray1024.soa.navigatorservice.ejb.service.RemoteNavigatorService", RemoteNavigatorService.class);
     }
 
 }

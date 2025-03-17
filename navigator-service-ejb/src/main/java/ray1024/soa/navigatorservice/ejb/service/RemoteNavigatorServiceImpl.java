@@ -37,7 +37,7 @@ public class RemoteNavigatorServiceImpl implements RemoteNavigatorService {
     @Override
     public RouteDto createRouteByLocationsNames(String fromLocationName,
                                                 String toLocationName,
-                                                float distance,
+                                                Float distance,
                                                 CoordinatesDto coordinatesDto,
                                                 String routeName
     ) {
@@ -47,7 +47,7 @@ public class RemoteNavigatorServiceImpl implements RemoteNavigatorService {
                         .coordinates(coordinatesDto)
                         .from(LocationDto.builder().x(1).y(1).z(1).name(fromLocationName).build())
                         .to(LocationDto.builder().x(1).y(1).z(1).name(toLocationName).build())
-                        .distance((int) distance)
+                        .distance((int) distance.floatValue())
                         .build()
         );
     }

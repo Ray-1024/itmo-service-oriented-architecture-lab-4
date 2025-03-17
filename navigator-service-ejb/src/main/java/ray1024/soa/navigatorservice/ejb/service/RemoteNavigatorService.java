@@ -12,7 +12,7 @@ public interface RemoteNavigatorService {
 
     RouteDto createRouteByLocationsNames(String fromLocationName,
                                          String toLocationName,
-                                         float distance,
+                                         Float distance,
                                          CoordinatesDto coordinatesDto,
                                          String routeName
     );
