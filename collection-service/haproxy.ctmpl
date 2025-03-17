@@ -1,5 +1,6 @@
 global
     log stdout format raw local0
+    lua-load /usr/local/etc/haproxy/cors.lua
 
 defaults
     timeout connect 3000
@@ -20,10 +21,8 @@ frontend http_front
     mode http
     bind *:7000
     default_backend service_backend
-    http-response add-header Access-Control-Allow-Origin "*"
-    http-response add-header Access-Control-Allow-Methods "GET, POST, DELETE, PUT"
-    http-response add-header Access-Control-Allow-Headers "Origin, X-Requested-With, Content-Type, Accept"
-    http-response add-header Access-Control-Allow-Credentials "true"
+    http-request lua.cors "GET,POST,OPTIONS,PUT,DELETE" "http://se.ifmo.ru,http://localhost" "Content-Type,Authorization"
+    http-response lua.cors
 
 backend service_backend
     mode http

@@ -317,8 +317,10 @@ const modes = {
                     headers: {
                         'Content-Type': 'application/xml',
                         'Accept': 'application/xml',
-                        'Access-Control-Allow-Origin' : '*'
+                        'Access-Control-Allow-Origin' : '*',
+                        'Origin': 'http://localhost:7000'
                     },
+                    mode: 'no-cors'
                 });
                 const data = await response.text();
                 console.log(data);
@@ -374,7 +376,8 @@ const modes = {
                     headers: {
                         'Content-Type': 'application/xml',
                         'Accept': 'application/xml',
-                        'Access-Control-Allow-Origin' : '*'
+                        'Access-Control-Allow-Origin' : '*',
+                        'Origin': 'http://localhost:7000'
                     },
                     body: `
                     <route>
@@ -392,7 +395,8 @@ const modes = {
                     </to>
                     <distance>${fields.routeDistance}</distance>
                     </route>
-                    `
+                    `,
+                    mode: 'no-cors'
                 });
                 const data = await response.text();
                 if (response.status === 200) {
@@ -423,8 +427,10 @@ const modes = {
                     headers: {
                         'Content-Type': 'application/xml',
                         'Accept': 'application/xml',
-                        'Access-Control-Allow-Origin' : '*'
+                        'Access-Control-Allow-Origin' : '*',
+                        'Origin': 'http://localhost:7000'
                     },
+                    mode: 'no-cors'
                 });
                 const data = await response.text();
                 if (response.status === 200) {
@@ -477,7 +483,8 @@ const modes = {
                     headers: {
                         'Content-Type': 'application/xml',
                         'Accept': 'application/xml',
-                        'Access-Control-Allow-Origin' : '*'
+                        'Access-Control-Allow-Origin' : '*',
+                        'Origin': 'http://localhost:7000'
                     },
                     body: `
                     <route>
@@ -497,7 +504,8 @@ const modes = {
                     </to>
                     <distance>${fields.routeDistance}</distance>
                     </route>
-                    `
+                    `,
+                    mode: 'no-cors'
                 });
                 const data = await response.text();
                 if (response.status === 200) {
@@ -528,8 +536,10 @@ const modes = {
                     headers: {
                         'Content-Type': 'application/xml',
                         'Accept': 'application/xml',
-                        'Access-Control-Allow-Origin' : '*'
+                        'Access-Control-Allow-Origin' : '*',
+                        'Origin': 'http://localhost:7000'
                     },
+                    mode: 'no-cors'
                 });
                 const data = await response.text();
                 if (response.status === 204) {
@@ -556,8 +566,10 @@ const modes = {
                     headers: {
                         'Content-Type': 'application/xml',
                         'Accept': 'application/xml',
-                        'Access-Control-Allow-Origin' : '*'
-                    }
+                        'Access-Control-Allow-Origin' : '*',
+                        'Origin': 'http://localhost:7000'
+                    },
+                    mode: 'no-cors'
                 });
                 const data = await response.text();
                 if (response.status === 200) {
@@ -593,8 +605,10 @@ const modes = {
                     headers: {
                         'Content-Type': 'application/xml',
                         'Accept': 'application/xml',
-                        'Access-Control-Allow-Origin' : '*'
-                    }
+                        'Access-Control-Allow-Origin' : '*',
+                        'Origin': 'http://localhost:7000'
+                    },
+                    mode: 'no-cors'
                 });
                 const data = await response.text();
                 if (response.status === 200) {
@@ -634,8 +648,10 @@ const modes = {
                     headers: {
                         'Content-Type': 'application/xml',
                         'Accept': 'application/xml',
-                        'Access-Control-Allow-Origin' : '*'
-                    }
+                        'Access-Control-Allow-Origin' : '*',
+                        'Origin': 'http://localhost:7000'
+                    },
+                    mode: 'no-cors'
                 });
                 const data = await response.text();
                 if (response.status === 200) {
@@ -679,7 +695,8 @@ const modes = {
                     headers: {
                         'Content-Type': 'application/xml',
                         'Accept': 'application/xml',
-                        'Access-Control-Allow-Origin' : '*'
+                        'Access-Control-Allow-Origin' : '*',
+                        'Origin': 'http://localhost:7000'
                     },
                     body: `
                     <request>
@@ -689,7 +706,8 @@ const modes = {
                     </coordinates>
                     <name>${fields.routeName}</name>
                     </request>
-                    `
+                    `,
+                    mode: 'no-cors'
                 });
                 const data = await response.text();
                 if (response.status === 200) {
