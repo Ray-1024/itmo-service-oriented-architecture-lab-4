@@ -1,6 +1,8 @@
 package ray1024.soa.navigatorservice.client;
 
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
@@ -24,6 +26,9 @@ public class CollectionServiceClient {
     private final static String COLLECTION_SERVICE_BASE_URL = "http://localhost:7000/api/v1/routes";
 
     private final RestTemplate restTemplate = new RestTemplate();
+
+    @Inject
+    private XmlMapper xmlMapper;
 
     public List<RouteDto> getAllRoutes(int pageSize, int pageNumber, String sort, String filter) {
         try {
@@ -179,4 +184,5 @@ public class CollectionServiceClient {
                     .build();
         }
     }
+
 }

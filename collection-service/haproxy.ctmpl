@@ -1,6 +1,5 @@
 global
     log stdout format raw local0
-    lua-load /usr/local/etc/haproxy/cors.lua
 
 defaults
     timeout connect 3000
@@ -11,7 +10,7 @@ defaults
     option  httplog
 
 frontend stats
-    bind *:8404
+    bind 0.0.0.0:8404
     mode http
     stats uri /
     stats show-legends
@@ -19,10 +18,8 @@ frontend stats
 
 frontend http_front
     mode http
-    bind *:7000
+    bind 0.0.0.0:7000
     default_backend service_backend
-    http-request lua.cors "GET,POST,OPTIONS,PUT,DELETE" "http://se.ifmo.ru,http://localhost" "Content-Type,Authorization"
-    http-response lua.cors
 
 backend service_backend
     mode http

@@ -316,11 +316,8 @@ const modes = {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/xml',
-                        'Accept': 'application/xml',
-                        'Access-Control-Allow-Origin' : '*',
-                        'Origin': 'http://localhost:7000'
-                    },
-                    mode: 'no-cors'
+                        'Accept': 'application/xml'
+                    }
                 });
                 const data = await response.text();
                 console.log(data);
@@ -375,9 +372,7 @@ const modes = {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/xml',
-                        'Accept': 'application/xml',
-                        'Access-Control-Allow-Origin' : '*',
-                        'Origin': 'http://localhost:7000'
+                        'Accept': 'application/xml'
                     },
                     body: `
                     <route>
@@ -395,8 +390,7 @@ const modes = {
                     </to>
                     <distance>${fields.routeDistance}</distance>
                     </route>
-                    `,
-                    mode: 'no-cors'
+                    `
                 });
                 const data = await response.text();
                 if (response.status === 200) {
@@ -426,11 +420,8 @@ const modes = {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/xml',
-                        'Accept': 'application/xml',
-                        'Access-Control-Allow-Origin' : '*',
-                        'Origin': 'http://localhost:7000'
-                    },
-                    mode: 'no-cors'
+                        'Accept': 'application/xml'
+                    }
                 });
                 const data = await response.text();
                 if (response.status === 200) {
@@ -482,9 +473,7 @@ const modes = {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/xml',
-                        'Accept': 'application/xml',
-                        'Access-Control-Allow-Origin' : '*',
-                        'Origin': 'http://localhost:7000'
+                        'Accept': 'application/xml'
                     },
                     body: `
                     <route>
@@ -504,8 +493,7 @@ const modes = {
                     </to>
                     <distance>${fields.routeDistance}</distance>
                     </route>
-                    `,
-                    mode: 'no-cors'
+                    `
                 });
                 const data = await response.text();
                 if (response.status === 200) {
@@ -535,11 +523,8 @@ const modes = {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/xml',
-                        'Accept': 'application/xml',
-                        'Access-Control-Allow-Origin' : '*',
-                        'Origin': 'http://localhost:7000'
-                    },
-                    mode: 'no-cors'
+                        'Accept': 'application/xml'
+                    }
                 });
                 const data = await response.text();
                 if (response.status === 204) {
@@ -565,11 +550,8 @@ const modes = {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/xml',
-                        'Accept': 'application/xml',
-                        'Access-Control-Allow-Origin' : '*',
-                        'Origin': 'http://localhost:7000'
-                    },
-                    mode: 'no-cors'
+                        'Accept': 'application/xml'
+                    }
                 });
                 const data = await response.text();
                 if (response.status === 200) {
@@ -604,11 +586,8 @@ const modes = {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/xml',
-                        'Accept': 'application/xml',
-                        'Access-Control-Allow-Origin' : '*',
-                        'Origin': 'http://localhost:7000'
-                    },
-                    mode: 'no-cors'
+                        'Accept': 'application/xml'
+                    }
                 });
                 const data = await response.text();
                 if (response.status === 200) {
@@ -647,11 +626,8 @@ const modes = {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/xml',
-                        'Accept': 'application/xml',
-                        'Access-Control-Allow-Origin' : '*',
-                        'Origin': 'http://localhost:7000'
-                    },
-                    mode: 'no-cors'
+                        'Accept': 'application/xml'
+                    }
                 });
                 const data = await response.text();
                 if (response.status === 200) {
@@ -694,9 +670,7 @@ const modes = {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/xml',
-                        'Accept': 'application/xml',
-                        'Access-Control-Allow-Origin' : '*',
-                        'Origin': 'http://localhost:7000'
+                        'Accept': 'application/xml'
                     },
                     body: `
                     <request>
@@ -706,8 +680,7 @@ const modes = {
                     </coordinates>
                     <name>${fields.routeName}</name>
                     </request>
-                    `,
-                    mode: 'no-cors'
+                    `
                 });
                 const data = await response.text();
                 if (response.status === 200) {
