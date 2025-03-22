@@ -16,7 +16,7 @@
       <option name="DOMAIN" value="false" />
       <option name="SERVER_GROUP" />
       <option name="USERNAME" value="ray10242" />
-      <option name="CREDENTIAL_ALIAS" value="069b3008-0515-4879-99f7-df0475b0a448" />
+      <option name="CREDENTIAL_ALIAS" />
     </server-settings>
     <predefined_log_file enabled="true" id="JBoss" />
     <RunnerSettings RunnerId="Debug">
