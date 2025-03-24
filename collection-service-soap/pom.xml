@@ -9,7 +9,7 @@
         <relativePath/>
     </parent>
     <groupId>ray1024.soa</groupId>
-    <artifactId>collection-service</artifactId>
+    <artifactId>collection-service-soap</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>collection-service</name>
     <description>collection-service</description>
