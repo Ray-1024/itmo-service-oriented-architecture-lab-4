@@ -5,16 +5,12 @@ import jakarta.inject.Inject;
 import org.jboss.ejb3.annotation.Pool;
 import ray1024.soa.navigatorservice.client.CollectionServiceClient;
 import ray1024.soa.navigatorservice.model.dto.CoordinatesDto;
-import ray1024.soa.navigatorservice.model.dto.LocationDto;
 import ray1024.soa.navigatorservice.model.dto.RouteDto;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
-@Stateless(name = "RemoteCollectionService")
-@Pool("remote-collection-service-pool")
+@Stateless(name = "RemoteNavigatorService")
+@Pool("remote-navigator-service-pool")
 public class RemoteNavigatorServiceImpl implements RemoteNavigatorService {
 
     @Inject
@@ -22,16 +18,21 @@ public class RemoteNavigatorServiceImpl implements RemoteNavigatorService {
 
     @Override
     public List<RouteDto> getRoutesWithLocationNamesSorted(String fromLocationName, String toLocationName, String sorting) {
-        final ArrayList<RouteDto> routes = new ArrayList<>();
-        final String filter = "from.name=" + fromLocationName;
-        for (int pageNumber = 1; ; ++pageNumber) {
-            List<RouteDto> page = collectionServiceClient.getAllRoutes(100, pageNumber, sorting, filter);
-
-            if (page == null || page.isEmpty()) break;
-
-            routes.addAll(page.stream().filter(routeDto -> Objects.equals(routeDto.getTo().getName(), toLocationName)).collect(Collectors.toList()));
+//        final ArrayList<RouteDto> routes = new ArrayList<>();
+//        final String filter = "from.name=" + fromLocationName;
+//        for (int pageNumber = 1; ; ++pageNumber) {
+//            List<RouteDto> page = collectionServiceClient.getAllRoutes(100, pageNumber, sorting, filter);
+//
+//            if (page == null || page.isEmpty()) break;
+//
+//            routes.addAll(page.stream().filter(routeDto -> Objects.equals(routeDto.getTo().getName(), toLocationName)).collect(Collectors.toList()));
+//        }
+//        return routes;
+        try {
+            Thread.sleep(10);
+        } catch (InterruptedException ignored) {
         }
-        return routes;
+        return List.of();
     }
 
     @Override
@@ -41,14 +42,19 @@ public class RemoteNavigatorServiceImpl implements RemoteNavigatorService {
                                                 CoordinatesDto coordinatesDto,
                                                 String routeName
     ) {
-        return collectionServiceClient.createRoute(
-                RouteDto.builder()
-                        .name(routeName)
-                        .coordinates(coordinatesDto)
-                        .from(LocationDto.builder().x(1).y(1).z(1).name(fromLocationName).build())
-                        .to(LocationDto.builder().x(1).y(1).z(1).name(toLocationName).build())
-                        .distance((int) distance.floatValue())
-                        .build()
-        );
+//        return collectionServiceClient.createRoute(
+//                RouteDto.builder()
+//                        .name(routeName)
+//                        .coordinates(coordinatesDto)
+//                        .from(LocationDto.builder().x(1).y(1).z(1).name(fromLocationName).build())
+//                        .to(LocationDto.builder().x(1).y(1).z(1).name(toLocationName).build())
+//                        .distance((int) distance.floatValue())
+//                        .build()
+//        );
+        try {
+            Thread.sleep(10);
+        } catch (InterruptedException ignored) {
+        }
+        return RouteDto.builder().build();
     }
 }
