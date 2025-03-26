@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://collectionservice.soa.ray1024/soap/gen" elementFormDefault="qualified">
+
+    <xs:complexType name="CoordinatesDto">
+        <xs:sequence>
+            <xs:element name="x" type="xs:long"/>
+            <xs:element name="y" type="xs:long"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="LocationDto">
+        <xs:sequence>
+            <xs:element name="x" type="xs:int"/>
+            <xs:element name="y" type="xs:int"/>
+            <xs:element name="z" type="xs:double"/>
+            <xs:element name="name" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="RouteDto">
+        <xs:sequence>
+            <xs:element name="id" type="xs:long"/>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="coordinates" type="CoordinatesDto"/>
+            <xs:element name="creationDate" type="xs:string"/>
+            <xs:element name="from" type="LocationDto" minOccurs="0"/>
+            <xs:element name="to" type="LocationDto"/>
+            <xs:element name="distance" type="xs:int"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="GroupInfoDto">
+        <xs:sequence>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="count" type="xs:int"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="PingRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="message" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="PingResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="message" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetRoutesRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="size" type="xs:int"/>
+                <xs:element name="page" type="xs:int"/>
+                <xs:element name="sort" type="xs:string"/>
+                <xs:element name="filter" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetRoutesResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="routes" type="RouteDto" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetRouteRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="routeId" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetRouteResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="route" type="RouteDto"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="CreateRouteRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="route" type="RouteDto"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="CreateRouteResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="route" type="RouteDto"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="DeleteRouteRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="routeId" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="DeleteRouteResponse">
+        <xs:complexType>
+            <xs:sequence>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="PutRouteRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="routeId" type="xs:long"/>
+                <xs:element name="routeDto" type="RouteDto"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="PutRouteResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="route" type="RouteDto"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetGroupsInfoRequest">
+        <xs:complexType>
+            <xs:sequence>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetGroupsInfoResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="groups" type="GroupInfoDto" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetEqualDistanceRoutesRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="distance" type="xs:float"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetEqualDistanceRoutesResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="count" type="xs:int"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>

@@ -2,7 +2,7 @@
   <configuration default="false" name="collection-service-1" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
     <option name="ACTIVE_PROFILES" value="first" />
     <option name="ALTERNATIVE_JRE_PATH" value="21" />
-    <module name="collection-service" />
+    <module name="collection-service-soap" />
     <option name="SPRING_BOOT_MAIN_CLASS" value="ray1024.soa.collectionservice.CollectionServiceApplication" />
     <method v="2">
       <option name="Make" enabled="true" />

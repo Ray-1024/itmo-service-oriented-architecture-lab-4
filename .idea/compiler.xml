@@ -8,7 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="navigator-service-ejb" />
-        <module name="collection-service" />
+        <module name="collection-service-soap" />
       </profile>
       <profile name="Annotation profile for navigator-service" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -23,7 +23,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="collection-service" options="-parameters" />
+      <module name="collection-service-soap" options="-parameters" />
       <module name="navigator-service" options="-parameters" />
       <module name="navigator-service-ejb" options="-parameters" />
     </option>

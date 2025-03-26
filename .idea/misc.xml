@@ -7,6 +7,7 @@
         <option value="$PROJECT_DIR$/navigator-service/pom.xml" />
         <option value="$PROJECT_DIR$/navigator-service-ejb/pom.xml" />
         <option value="$PROJECT_DIR$/collection-service/pom.xml" />
+        <option value="$PROJECT_DIR$/collection-service-soap/pom.xml" />
       </list>
     </option>
   </component>

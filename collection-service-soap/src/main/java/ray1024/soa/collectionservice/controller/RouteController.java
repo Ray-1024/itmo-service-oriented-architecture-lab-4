@@ -2,29 +2,28 @@ package ray1024.soa.collectionservice.controller;
 
 
 import lombok.AllArgsConstructor;
-import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.ws.server.endpoint.annotation.Endpoint;
+import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
+import org.springframework.ws.server.endpoint.annotation.RequestPayload;
+import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 import ray1024.soa.collectionservice.exception.InvalidQueryParamException;
 import ray1024.soa.collectionservice.model.dto.CountDto;
 import ray1024.soa.collectionservice.model.dto.GroupsInfoDto;
-import ray1024.soa.collectionservice.model.dto.RouteDto;
 import ray1024.soa.collectionservice.model.dto.RoutesDto;
 import ray1024.soa.collectionservice.service.RouteService;
 
-@RequestMapping(value = "/api/v1/routes",
-        consumes = org.springframework.http.MediaType.APPLICATION_XML_VALUE,
-        produces = org.springframework.http.MediaType.APPLICATION_XML_VALUE)
-@RestController
+import static ray1024.soa.collectionservice.config.WsConfig.NAMESPACE_URI;
+
+@Endpoint
 @AllArgsConstructor
 public class RouteController {
     private final RouteService routeService;
 
-    @GetMapping
-    public RoutesDto getAll(@RequestParam("size") @DefaultValue(value = "5") Integer size,
-                            @RequestParam("page") @DefaultValue(value = "1") Integer page,
-                            @RequestParam("sort") @DefaultValue(value = "") String sort,
-                            @RequestParam("filter") @DefaultValue(value = "") String filter) {
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetRoutesRequest")
+    @ResponsePayload
+    public GetRoutesResponse getAll(@RequestPayload GetRoutesRequest request) {
         if (size == null) size = 5;
         if (page == null) page = 1;
         return RoutesDto.builder()
@@ -33,19 +32,21 @@ public class RouteController {
                 .build();
     }
 
-    @PostMapping
-    public RouteDto createRoute(@RequestBody RouteDto routeDto) {
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "CreateRouteRequest")
+    @ResponsePayload
+    public CreateRouteResponse createRoute(@RequestPayload CreateRouteRequest request) {
         return routeService.createRoute(routeDto);
     }
 
-    @GetMapping("/{routeId}")
-    public RouteDto getRoute(@PathVariable("routeId") Long routeId) {
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetRouteRequest")
+    @ResponsePayload
+    public GetRouteResponse getRoute(@RequestPayload GetRouteRequest request) {
         return routeService.getRoute(routeId);
     }
 
-    @PutMapping("/{routeId}")
-    public RouteDto modifyRoute(@PathVariable("routeId") Long routeId,
-                                @RequestBody RouteDto routeDto) {
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "PutRouteRequest")
+    @ResponsePayload
+    public PutRouteResponse modifyRoute(@RequestPayload PutRouteRequest request) {
         if (routeId == null)
             throw new InvalidQueryParamException("routeId", "routeId is incorrect", "Incorrect route id");
         if (routeDto == null)
@@ -55,21 +56,24 @@ public class RouteController {
         return routeService.updateRoute(routeDto);
     }
 
-    @DeleteMapping("/{routeId}")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "DeleteRouteRequest")
+    @ResponsePayload
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteRoute(@PathVariable("routeId") long routeId) {
+    public DeleteRouteResponse deleteRoute(@RequestPayload DeleteRouteRequest request) {
         routeService.deleteRoute(routeId);
     }
 
-    @GetMapping("/name-groups-info")
-    public GroupsInfoDto getGroupsInfo() {
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetGroupsInfoRequest")
+    @ResponsePayload
+    public GetGroupsInfoResponse getGroupsInfo(@RequestPayload GetGroupsInfoRequest request) {
         return GroupsInfoDto.builder()
                 .groups(routeService.getGroupsInfo())
                 .build();
     }
 
-    @GetMapping("/with-distance-count")
-    public CountDto getEqualDistanceRoutesCount(@RequestParam("distance") float distance) {
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetEqualDistanceRoutesRequest")
+    @ResponsePayload
+    public GetEqualDistanceRoutesResponse getEqualDistanceRoutesCount(@RequestPayload GetEqualDistanceRoutesRequest request) {
         return CountDto.builder()
                 .count((int) routeService.getEqualDistanceRoutesCount(distance))
                 .build();
