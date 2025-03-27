@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-           targetNamespace="http://collectionservice.soa.ray1024/soap/gen" elementFormDefault="qualified">
+           xmlns="http://collectionservice.soa.ray1024/soap/gen"
+           targetNamespace="http://collectionservice.soa.ray1024/soap/gen"
+           elementFormDefault="qualified">
 
     <xs:complexType name="CoordinatesDto">
         <xs:sequence>

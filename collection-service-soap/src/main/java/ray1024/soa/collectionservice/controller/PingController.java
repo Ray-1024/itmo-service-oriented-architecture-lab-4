@@ -4,6 +4,8 @@ import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
+import ray1024.soa.collectionservice.soap.gen.PingRequest;
+import ray1024.soa.collectionservice.soap.gen.PingResponse;
 
 import static ray1024.soa.collectionservice.config.WsConfig.NAMESPACE_URI;
 
