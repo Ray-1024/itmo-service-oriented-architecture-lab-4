@@ -13,7 +13,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>collection-service-soap</name>
     <description>collection-service</description>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <properties>
         <java.version>17</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

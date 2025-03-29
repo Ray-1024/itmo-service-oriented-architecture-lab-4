@@ -69,7 +69,7 @@
     <xs:element name="GetRoutesResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="routes" type="RouteDto" minOccurs="0" maxOccurs="unbounded"/>
+                <xs:element name="route" type="RouteDto" minOccurs="0" maxOccurs="unbounded"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -123,7 +123,7 @@
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="routeId" type="xs:long"/>
-                <xs:element name="routeDto" type="RouteDto"/>
+                <xs:element name="route" type="RouteDto"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -146,7 +146,7 @@
     <xs:element name="GetGroupsInfoResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="groups" type="GroupInfoDto" minOccurs="0" maxOccurs="unbounded"/>
+                <xs:element name="group" type="GroupInfoDto" minOccurs="0" maxOccurs="unbounded"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

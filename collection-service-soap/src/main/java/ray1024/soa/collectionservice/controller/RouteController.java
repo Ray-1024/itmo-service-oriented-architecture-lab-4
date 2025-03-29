@@ -95,7 +95,7 @@ public class RouteController {
         if (request.getSize() == 0) request.setSize(5);
         if (request.getPage() == 0) request.setPage(1);
         GetRoutesResponse response = new GetRoutesResponse();
-        response.getRoutes().addAll(routeService.getAllRoutes(request.getPage(), request.getSize(),
+        response.getRoute().addAll(routeService.getAllRoutes(request.getPage(), request.getSize(),
                 request.getSort(), request.getFilter()).stream().map(this::fromMyRouteDto).toList());
         return response;
     }
@@ -121,12 +121,12 @@ public class RouteController {
     public PutRouteResponse modifyRoute(@RequestPayload PutRouteRequest request) {
 //        if (request.getRouteId() == null)
 //            throw new InvalidQueryParamException("routeId", "routeId is incorrect", "Incorrect route id");
-        if (request.getRouteDto() == null)
+        if (request.getRoute() == null)
             throw new InvalidQueryParamException("route", "route is incorrect", "Incorrect route");
-        if (request.getRouteId() != (request.getRouteDto().getId()))
+        if (request.getRouteId() != (request.getRoute().getId()))
             throw new InvalidQueryParamException("routeId", "routeId are not equal to route.id from body", "Different id");
         PutRouteResponse response = new PutRouteResponse();
-        response.setRoute(fromMyRouteDto(routeService.updateRoute(toMyRouteDto(request.getRouteDto()))));
+        response.setRoute(fromMyRouteDto(routeService.updateRoute(toMyRouteDto(request.getRoute()))));
         return response;
     }
 
@@ -142,7 +142,7 @@ public class RouteController {
     @ResponsePayload
     public GetGroupsInfoResponse getGroupsInfo(@RequestPayload GetGroupsInfoRequest request) {
         GetGroupsInfoResponse response = new GetGroupsInfoResponse();
-        response.getGroups().addAll(routeService.getGroupsInfo().stream().map(this::fromMyGroupInfoDto).toList());
+        response.getGroup().addAll(routeService.getGroupsInfo().stream().map(this::fromMyGroupInfoDto).toList());
         return response;
     }
 
