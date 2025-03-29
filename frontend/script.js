@@ -324,10 +324,10 @@ const modes = {
                 if (response.status === 200) {
                     const routesResponse = utils.parseXml(data);
                     console.log(routesResponse);
-                    if (Array.isArray(routesResponse.routes.route))
-                        utils.resultRouteTable(routesResponse.routes.route);
+                    if (Array.isArray(routesResponse.route))
+                        utils.resultRouteTable(routesResponse.route);
                     else
-                        utils.resultRouteTable([routesResponse.routes.route]);
+                        utils.resultRouteTable([routesResponse.route]);
                 }
                 utils.handleNon200Response(response, data);
             } catch (error) {
@@ -591,7 +591,7 @@ const modes = {
                 });
                 const data = await response.text();
                 if (response.status === 200) {
-                    const count = utils.toInt(utils.parseXml(data).count);
+                    const count = utils.toInt(utils.parseXml(data));
                     console.log(count);
                     utils.resultText(`Количество маршрутов с длиной ${fields.routeDistance} : ${count}`);
                 }

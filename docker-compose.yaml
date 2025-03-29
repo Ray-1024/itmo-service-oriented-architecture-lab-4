@@ -6,34 +6,34 @@ services:
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_DB: postgres
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-
-  consul:
-    image: hashicorp/consul:1.14.0
-    container_name: consul
-    ports:
-      - "8500:8500"
-      - "8600:8600/udp"
-    command: agent -dev -client=0.0.0.0
-
-  haproxy_1:
-    image: haproxy:2.2-alpine
-    container_name: haproxy_1
-    restart: always
-    volumes:
-      - ./collection-service/haproxy:/usr/local/etc/haproxy
-    ports:
-      - "7000:7000"
-      - "8404:8404"
-
-  haproxy_2:
-    image: haproxy:2.2-alpine
-    container_name: haproxy_2
-    restart: always
-    volumes:
-      - ./navigator-service/haproxy:/usr/local/etc/haproxy
-    ports:
-      - "7001:7000"
-      - "8405:8404"
+      POSTGRES_DB: studs
+      POSTGRES_USER: s335135
+      POSTGRES_PASSWORD: r9kNM3hIapwJL2N5
+#
+#  consul:
+#    image: hashicorp/consul:1.14.0
+#    container_name: consul
+#    ports:
+#      - "8500:8500"
+#      - "8600:8600/udp"
+#    command: agent -dev -client=0.0.0.0
+#
+#  haproxy_1:
+#    image: haproxy:2.2-alpine
+#    container_name: haproxy_1
+#    restart: always
+#    volumes:
+#      - ./collection-service/haproxy:/usr/local/etc/haproxy
+#    ports:
+#      - "7000:7000"
+#      - "8404:8404"
+#
+#  haproxy_2:
+#    image: haproxy:2.2-alpine
+#    container_name: haproxy_2
+#    restart: always
+#    volumes:
+#      - ./navigator-service/haproxy:/usr/local/etc/haproxy
+#    ports:
+#      - "7001:7000"
+#      - "8405:8404"
